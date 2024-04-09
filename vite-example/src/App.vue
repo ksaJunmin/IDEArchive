@@ -11,7 +11,7 @@ export default {
 		}
 	},
 	beforeCreate() {
-		console.log("LC is bfcr"), this.count()
+		console.log("LC is beforeCreate"), this.count()
 	}
 }
 </script>
