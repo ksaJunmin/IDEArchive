@@ -7,7 +7,11 @@ export default {
 	data() {
 		return {
 			count: 0,
+			
 		}
+	},
+	beforeCreate() {
+		console.log("LC is bfcr"), this.count()
 	}
 }
 </script>
