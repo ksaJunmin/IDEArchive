@@ -1,7 +1,10 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
-import router from './router'
-import BootstrapVue3 from 'bootstrap-vue-3'
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
 
-createApp(App).mount('#app')
+loadFonts()
+
+createApp(App)
+  .use(vuetify)
+  .mount('#app')
