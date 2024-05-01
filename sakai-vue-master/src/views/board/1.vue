@@ -50,6 +50,57 @@ const nestedMenuitems = ref([
         ]
     },
 ]);
+
+
+import { onMounted } from 'vue';
+import { ProductService } from '@/service/ProductService';
+
+const dataviewValue = ref(null);
+const layout = ref('grid');
+const sortKey = ref(null);
+const sortOrder = ref(null);
+const sortField = ref(null);
+const sortOptions = ref([
+    { label: 'Price High to Low', value: '!price' },
+    { label: 'Price Low to High', value: 'price' }
+]);
+
+const productService = new ProductService();
+
+onMounted(() => {
+    productService.getProductsSmall().then((data) => (dataviewValue.value = data));
+});
+
+const onSortChange = (event) => {
+    const value = event.value.value;
+    const sortValue = event.value;
+
+    if (value.indexOf('!') === 0) {
+        sortOrder.value = -1;
+        sortField.value = value.substring(1, value.length);
+        sortKey.value = sortValue;
+    } else {
+        sortOrder.value = 1;
+        sortField.value = value;
+        sortKey.value = sortValue;
+    }
+};
+
+const getSeverity = (product) => {
+    switch (product.inventoryStatus) {
+        case 'INSTOCK':
+            return 'success';
+
+        case 'LOWSTOCK':
+            return 'warning';
+
+        case 'OUTOFSTOCK':
+            return 'danger';
+
+        default:
+            return null;
+    }
+};
 </script>
 
 <template>
@@ -60,13 +111,13 @@ const nestedMenuitems = ref([
             <div class="card">
                 <h5>DataView</h5>
                 <Menubar :model="nestedMenuitems">
-                <template #end>
-                    <IconField iconPosition="left">
-                        <InputIcon class="pi pi-search" />
-                        <InputText type="text" placeholder="Search" />
-                    </IconField>
-                </template>
-            </Menubar>
+                    <template #end>
+                        <IconField iconPosition="left">
+                            <InputIcon class="pi pi-search" />
+                            <InputText type="text" placeholder="Search" />
+                        </IconField>
+                    </template>
+                </Menubar>
                 <DataView :value="dataviewValue" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
                     <template #header>
                         <div class="grid grid-nogutter">
