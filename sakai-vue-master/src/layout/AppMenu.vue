@@ -3,17 +3,34 @@ import { ref } from 'vue';
 
 import AppMenuItem from './AppMenuItem.vue';
 
+/* https://primefaces.org/showcase/icons.xhtml?jfwid=34587 */
+
 const model = ref([
     {
         label: 'Home',
         items: [{ label: '메인 페이지', icon: 'pi pi-fw pi-home', to: '/' }]
     },
     {
-        label: '아이디어 게시판',
+        label: '게시판 1',
         items: [
-            { label: '최신순', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
-            { label: '인기순', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
-            { label: '글 작성하기', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
+            {label: '분류1', icon: 'pi pi-fw pi-list', to: '/board/1'},
+            {label: '분류2', icon: 'pi pi-fw pi-list'},
+        ]
+    },
+    {
+        label: '게시판 2',
+        items: [
+            {label: '분류1', icon: 'pi pi-fw pi-list'},
+            {label: '분류2', icon: 'pi pi-fw pi-list'},
+        ]
+    },
+    {
+        label: 'template',
+        items: [
+            { label: 'test1', icon: 'pi pi-fw pi-clone', to: '/uikit/formlayout' },
+            { label: 'Formlayout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
+            { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
+            { label: 'Bookmark', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
             { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', to: '/uikit/invalidstate' },
             { label: 'Button', icon: 'pi pi-fw pi-mobile', to: '/uikit/button', class: 'rotated-icon' },
             { label: 'Table', icon: 'pi pi-fw pi-table', to: '/uikit/table' },
