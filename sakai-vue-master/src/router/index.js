@@ -34,6 +34,11 @@ const router = createRouter({
                     component: () => import('@/views/board/3.vue')
                 },
                 {
+                    path: '/board/login',
+                    name: 'loginpage',
+                    component: () => import('@/views/board/login.vue')
+                },
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')
@@ -48,6 +53,7 @@ const router = createRouter({
                     name: 'floatlabel',
                     component: () => import('@/views/uikit/FloatLabel.vue')
                 },
+
                 {
                     path: '/uikit/invalidstate',
                     name: 'invalidstate',

@@ -480,7 +480,6 @@ const onContextRightClick = (event) => {
                 <router-view />
             </div>
         </div>
-
         <div class="col-12 md:col-4">
             <div class="card">
                 <h5>Tiered Menu</h5>
