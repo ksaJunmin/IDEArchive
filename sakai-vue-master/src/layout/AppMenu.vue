@@ -25,6 +25,10 @@ const model = ref([
         ]
     },
     {
+        label: 'Dashboard',
+        items: [{ label: '메인 페이지', icon: 'pi pi-fw pi-home', to: '/dashboard' }]
+    },
+    {
         label: 'template',
         items: [
             { label: 'test1', icon: 'pi pi-fw pi-clone', to: '/uikit/formlayout' },

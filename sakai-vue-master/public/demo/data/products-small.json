@@ -1,10 +1,10 @@
 {
     "data": [
         {"id": "1000","code": "f230fh0g3","name": "vscode에서 js파일이 안 불러와져요","description": "얼마 전에 vscode를 지웠다 깔았는데 그때 이후로 js파일을 열면 에...","image": "bamboo-watch.jpg","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
-        {"id": "1001","code": "nvklal433","name": "Black Band","description": "Product Description","image": "black-watch.jpg","price": 72,"category": "Accessories","quantity": 61,"inventoryStatus": "INSTOCK","rating": 8},
+        {"id": "1001","code": "nvklal433","name": "안녕하세요","description": "안녕히계세요","image": "black-watch.jpg","price": 72,"category": "Accessories","quantity": 61,"inventoryStatus": "INSTOCK","rating": 8},
         {"id": "1002","code": "zz21cz3c1","name": "행운의 편지","description": "이 편지는 영국에서 최초로 시작되어 일년에 한바퀴를 돌면서 받는 ...","image": "blue-band.jpg","price": 79,"category": "Fitness","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": -3},
         {"id": "1003","code": "244wgerg2","name": "태권도 재수강이면 개추 ㅋㅋ","description": "3학기 째 태극 1장 배우는 중인 2학년은 개추 ㅋㅋ 일단 나부터","image": "blue-t-shirt.jpg","price": 29,"category": "Clothing","quantity": 25,"inventoryStatus": "INSTOCK","rating": 10},
-        {"id": "1004","code": "h456wer53","name": "Bracelet","description": "Product Description","image": "bracelet.jpg","price": 15,"category": "Accessories","quantity": 73,"inventoryStatus": "INSTOCK","rating": 3},
+        {"id": "1004","code": "h456wer53","name": "아","description": "그렇군요","image": "bracelet.jpg","price": 15,"category": "Accessories","quantity": 73,"inventoryStatus": "INSTOCK","rating": 3},
         {"id": "1005","code": "av2231fwg","name": "ddc 키 있으신 분","description": "ㅈㄱㄴ","image": "brown-purse.jpg","price": 120,"category": "Accessories","quantity": 0,"inventoryStatus": "OUTOFSTOCK","rating": 0}
     ]
 }
