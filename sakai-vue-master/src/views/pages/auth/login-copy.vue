@@ -45,7 +45,6 @@ const logoUrl = computed(() => {
             </div>
         </div>
     </div>
-    <AppConfig simple />
 </template>
 
 <style scoped>

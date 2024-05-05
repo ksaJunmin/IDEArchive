@@ -37,15 +37,13 @@ onMounted(() => {
                                 <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
                                     <div>
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
-                                            <div class="flex-grow-1">
-                                                <div class="text-lg font-medium text-900 mt-2 overflow-hidden whitespace-nowrap">
-                                                    <div class="truncate">{{ item.name }}</div>
-                                                </div>
-                                                <span class="font-medium text-secondary text-sm">{{ item.description}}</span>
+                                            <div class="min-w-0">
+                                                <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.name }}</div>
+                                                <div class="font-medium text-secondary text-sm ellipsis">{{ item.description}}</div>
                                             </div>
                                             <div class="surface-100 p-1" style="border-radius: 30px">
                                                 <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                                                    <span class="text-900 font-medium text-sm">{{ item.rating }}</span>
+                                                    <div class="text-900 font-medium text-sm">{{ item.rating }}</div>
                                                     <i class="pi pi-thumbs-up"></i>
                                                 </div>
                                             </div>
@@ -77,13 +75,13 @@ onMounted(() => {
                                 <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
                                     <div>
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
-                                            <div>
-                                                <div class="text-lg font-medium text-900 mt-2">{{ item.name }}</div>
-                                                <span class="font-medium text-secondary text-sm">{{ item.description}}</span>
+                                            <div class="min-w-0">                       
+                                                <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.name }}</div>
+                                                <div class="font-medium text-secondary text-sm ellipsis">{{ item.description}}</div>
                                             </div>
                                             <div class="surface-100 p-1" style="border-radius: 30px">
                                                 <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                                                    <span class="text-900 font-medium text-sm">{{ item.rating }}</span>
+                                                    <div class="text-900 font-medium text-sm">{{ item.rating }}</div>
                                                     <i class="pi pi-thumbs-up"></i>
                                                 </div>
                                             </div>
@@ -106,9 +104,9 @@ onMounted(() => {
 </template>
 
 <style>
-    .truncate {
+    .ellipsis {
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
     }
 </style>
