@@ -1,4 +1,17 @@
+<script setup>
+import { useLayout } from '@/layout/composables/layout';
+import { ref, computed } from 'vue';
+import AppConfig from '@/layout/AppConfig.vue';
 
+const { layoutConfig } = useLayout();
+const email = ref('');
+const password = ref('');
+const checked = ref(false);
+
+const logoUrl = computed(() => {
+    return `/layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
+});
+</script>
 
 <template>
     <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
