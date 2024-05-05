@@ -14,7 +14,7 @@ const model = ref([
         label: '게시판 1',
         items: [
             {label: '분류1', icon: 'pi pi-fw pi-list', to: '/board/1'},
-            {label: '분류2', icon: 'pi pi-fw pi-list'},
+            {label: 'prepage', icon: 'pi pi-fw pi-list', to: '/board/prepage'},
         ]
     },
     {
