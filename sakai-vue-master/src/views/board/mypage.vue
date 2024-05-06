@@ -57,27 +57,24 @@ onBeforeUnmount(() => {
                 <div class="field">
                     <label for="age1" class="large-font">이메일: <strong>23-129@ksa.hs.kr</strong></label>
                 </div>
-                
             </div>
         </div>
-    </div>
-    <div class="col-12 md:col-12">
-    <div class="card p-fluid">
-    <div class = "stats">
-        <div>내가 작성한 글의 수: <strong>10</strong></div>
-        <div>내가 의뢰한 수: <strong>5</strong></div>
-    </div>
-    </div>
-    </div>
-    <div class="grid">
+        <div class="col-12 md:col-12">
+            <div class="card p-fluid">
+                <div class="stats">
+                    <div>내가 작성한 글의 수: <strong>10</strong></div>
+                    <div>내가 의뢰한 수: <strong>5</strong></div>
+                </div>
+            </div>
+        </div>
         <div class="col-12">
             <div class="card">
                 <h5>나의 포인트: <strong>500</strong> point</h5>
                 <div class="grid">
                     <!----
-                  <div class="col">
-                      <ProgressBar :value="value"></ProgressBar>
-                  </div>
+                <div class="col">
+                    <ProgressBar :value="value"></ProgressBar>
+                </div>
                 -->
                     <div class="col">
                         <ProgressBar :value="50" :showValue="false"></ProgressBar>
@@ -100,7 +97,7 @@ body {
 .large-font {
     font-size: 22px; /* 원하는 크기로 조정 */
 }
-.stats{
+.stats {
     font-size: 20px;
 }
 </style>
