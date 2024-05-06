@@ -11,21 +11,27 @@ const model = ref([
         items: [{ label: '메인 페이지', icon: 'pi pi-fw pi-home', to: '/' }]
     },
     {
-        label: '게시판 1',
+        label: '게시판',
         items: [
-            {label: '분류1', icon: 'pi pi-fw pi-list', to: '/board/1'},
+            {label: '해줘요', icon: 'pi pi-fw pi-list', to: '/board/1'},
+            {label: '도와줘요', icon: 'pi pi-fw pi-list', to: '/board/2'},
+            
+        ]
+    },
+    {
+        label: '유저',
+        items: [
             {label: 'prepage', icon: 'pi pi-fw pi-list', to: '/board/prepage'},
             {label: '마이페이지', icon: 'pi pi-fw pi-id-card', to: '/board/mypage'},
         ]
     },
+    /*
     {
         label: '게시판 2',
         items: [
-            {label: '분류1', icon: 'pi pi-fw pi-list', to: '/board/2'},
             {label: '분류2', icon: 'pi pi-fw pi-list', to: '/board/3'},
         ]
     },
-    /*
     {
         label: 'Dashboard',
         items: [{ label: '메인 페이지', icon: 'pi pi-fw pi-home', to: '/dashboard' }]

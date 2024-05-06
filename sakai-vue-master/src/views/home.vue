@@ -31,7 +31,7 @@ const goPost = (postId) => {
 </script>
 
 <template>
-    <h3>Main Page</h3>
+    <h3><strong>IDEArchive</strong>에 오신 걸 환영합니다!</h3>
 
     <div class="grid">
         <div class="col-12">

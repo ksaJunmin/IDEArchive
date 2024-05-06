@@ -10,10 +10,8 @@
                     <strong>해줘요 게시판에서 원하는 것을 얻을 수 있습니다!</strong><br />
                     <div class="content">
                         <span class="text">ex) 오늘 일반화학 1분반 수업 필기 의뢰합니다!!</span>
-                        <!---
-            <img src="/src/views/board/mypageimage/genchemDS.png" alt="Image">
-            -->
                     </div>
+                    <img src="/src/views/board/mypageimage/post.png" width="50%" height="auto" alt="Image">
                 </li>
                 <li class="left-align">
                     <strong>도와줘요 게시판에서 도움을 받을 수 있습니다!</strong>
@@ -21,7 +19,7 @@
                         <span class="text">ex) 미적분1 7단원을 마스터하려면 어떻게 해야할까요?</span>
                     </div>
                 </li>
-                <li><strong>의뢰를 받고 포인트를 얻고, 봉사시간을 챙길 수 있습니다!</strong></li>
+                <li><strong>의뢰를 수행하고 포인트를 얻고, 봉사시간을 챙길 수 있습니다!</strong></li>
             </ul>
         </div>
     </div>
