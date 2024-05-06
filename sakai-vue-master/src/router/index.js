@@ -45,7 +45,7 @@ const router = createRouter({
                     component: () => import('@/views/board/login.vue')
                 },
                 {
-                    path: '/post/:id',
+                    path: '/post/post:id',
                     name: 'post',
                     component: () => import('@/views/post/post.vue')
                 },
@@ -195,6 +195,11 @@ const router = createRouter({
             path: '/auth/login',
             name: 'login',
             component: () => import('@/views/pages/auth/Login.vue')
+        },
+        {
+            path: '/signin',
+            name: 'signin',
+            component: () => import('@/views/board/signin.vue')
         },
         {
             path: '/loginpage',

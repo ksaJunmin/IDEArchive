@@ -20,7 +20,7 @@ const sortOptions = ref([
 const productService = new ProductService();
 
 onMounted(() => {
-    productService.getProductsSmall().then((data) => (dataviewValue.value = data));
+    productService.getProductsSmall().then((data) => (dataviewValue.value = data, products.value = data));
 });
 
 const onSortChange = (event) => {
@@ -37,6 +37,115 @@ const onSortChange = (event) => {
         sortKey.value = sortValue;
     }
 };
+
+
+
+import { FilterMatchMode } from 'primevue/api';
+import { onBeforeMount } from 'vue';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
+
+const products = ref(null);
+const productDialog = ref(false);
+const deleteProductDialog = ref(false);
+const deleteProductsDialog = ref(false);
+const product = ref({});
+const selectedProducts = ref(null);
+const dt = ref(null);
+const filters = ref({});
+const submitted = ref(false);
+
+
+
+onBeforeMount(() => {
+    initFilters();
+});
+const formatCurrency = (value) => {
+    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+};
+
+const openNew = () => {
+    product.value = {};
+    submitted.value = false;
+    productDialog.value = true;
+};
+
+const hideDialog = () => {
+    productDialog.value = false;
+    submitted.value = false;
+};
+
+const saveProduct = () => {
+    submitted.value = true;
+    if (product.value.name && product.value.name.trim()) {
+        {
+            product.value.id = createId();
+            product.value.code = createId();
+            product.value.rating = 0;
+            product.value.time = "2초 전";
+            products.value.push(product.value);
+            toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+        }
+        productDialog.value = false;
+        product.value = {};
+    }
+};
+
+
+const confirmDeleteProduct = (editProduct) => {
+    product.value = editProduct;
+    deleteProductDialog.value = true;
+};
+
+const deleteProduct = () => {
+    products.value = products.value.filter((val) => val.id !== product.value.id);
+    deleteProductDialog.value = false;
+    product.value = {};
+    toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+};
+
+const findIndexById = (id) => {
+    let index = -1;
+    for (let i = 0; i < products.value.length; i++) {
+        if (products.value[i].id === id) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+};
+
+const createId = () => {
+    let id = '';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 5; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return id;
+};
+
+const exportCSV = () => {
+    dt.value.exportCSV();
+};
+
+const confirmDeleteSelected = () => {
+    deleteProductsDialog.value = true;
+};
+const deleteSelectedProducts = () => {
+    products.value = products.value.filter((val) => !selectedProducts.value.includes(val));
+    deleteProductsDialog.value = false;
+    selectedProducts.value = null;
+    toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+};
+
+const initFilters = () => {
+    filters.value = {
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+    };
+};
+
+
 </script>
 
 
@@ -46,6 +155,14 @@ const onSortChange = (event) => {
     <div class="grid">
         <div class="col-12">
             <div class="card">
+                <Toolbar class="mb-4">
+                    <template v-slot:start>
+                        <div class="my-2">
+                            <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="openNew" />
+                            <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
+                        </div>
+                    </template>
+                </Toolbar>
                 <DataView :value="dataviewValue" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
                     <template #header>
                         <div class="grid grid-nogutter">
@@ -111,6 +228,23 @@ const onSortChange = (event) => {
                         </div>
                     </template>
                 </DataView>
+                <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details" :modal="true" class="p-fluid">
+                    <img :src="'/demo/images/product/' + product.image" :alt="product.image" v-if="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" />
+                    <div class="field">
+                        <label for="name">제목</label>
+                        <InputText id="name" v-model.trim="product.name" required="true" autofocus :invalid="submitted && !product.name" />
+                        <small class="p-invalid" v-if="submitted && !product.name">제목을 입력하세요.</small>
+                    </div>
+                    <div class="field">
+                        <label for="description">본문</label>
+                        <Textarea id="description" v-model="product.description" required="true" rows="3" cols="20" />
+                    </div>
+
+                    <template #footer>
+                        <Button label="취소" icon="pi pi-times" text="" @click="hideDialog" />
+                        <Button label="저장" icon="pi pi-check" text="" @click="saveProduct" />
+                    </template>
+                </Dialog>
             </div>
         </div>
     </div>

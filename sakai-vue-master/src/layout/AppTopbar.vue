@@ -25,6 +25,10 @@ const onTopBarMenuButton = () => {
     topbarMenuActive.value = !topbarMenuActive.value;
     
 };
+const onSignInClick = () => {
+    topbarMenuActive.value = false;
+    router.push('/signin');
+};
 const onLoginClick = () => {
     topbarMenuActive.value = false;
     router.push('/loginpage');
@@ -81,13 +85,13 @@ const isOutsideClicked = (event) => {
         </button>
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
-            <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
-                <i class="pi pi-calendar"></i>
-                <span>Calendar</span>
+            <button @click="onSignInClick()" class="p-link layout-topbar-button">
+                <i class="pi pi-user-plus"></i>
+                <span>회원가입</span>
             </button>
             <button @click="onLoginClick()" class="p-link layout-topbar-button">
                 <i class="pi pi-user"></i>
-                <span>Profile</span>
+                <span>마이페이지</span>
             </button>
             <button @click="onSettingsClick()" class="p-link layout-topbar-button">
                 <i class="pi pi-cog"></i>
