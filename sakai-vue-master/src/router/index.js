@@ -29,10 +29,11 @@ const router = createRouter({
                     component: () => import('@/views/board/prepage.vue')
                 },
                 {
-                    path: '/board/2',
-                    name: 'board2',
-                    component: () => import('@/views/board/2.vue')
+                    path: '/board/mypage',
+                    name: 'mypage',
+                    component: () => import('@/views/board/mypage.vue')
                 },
+                
                 {
                     path: '/board/3',
                     name: 'board3',

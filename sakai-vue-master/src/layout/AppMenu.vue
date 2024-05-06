@@ -15,6 +15,7 @@ const model = ref([
         items: [
             {label: '분류1', icon: 'pi pi-fw pi-list', to: '/board/1'},
             {label: 'prepage', icon: 'pi pi-fw pi-list', to: '/board/prepage'},
+            {label: '마이페이지', icon: 'pi pi-fw pi-id-card', to: '/board/mypage'},
         ]
     },
     {
