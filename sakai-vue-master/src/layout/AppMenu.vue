@@ -25,6 +25,7 @@ const model = ref([
             {label: '분류2', icon: 'pi pi-fw pi-list', to: '/board/3'},
         ]
     },
+    /*
     {
         label: 'Dashboard',
         items: [{ label: '메인 페이지', icon: 'pi pi-fw pi-home', to: '/dashboard' }]
@@ -189,6 +190,7 @@ const model = ref([
             }
         ]
     }
+    */
 ]);
 </script>
 
@@ -198,11 +200,11 @@ const model = ref([
             <app-menu-item v-if="!item.separator" :item="item" :index="i"></app-menu-item>
             <li v-if="item.separator" class="menu-separator"></li>
         </template>
-        <li>
+        <!--<li>
             <a href="https://www.primefaces.org/primeblocks-vue/#/" target="_blank">
                 <img src="/layout/images/banner-primeblocks.png" alt="Prime Blocks" class="w-full mt-3" />
             </a>
-        </li>
+        </li>-->
     </ul>
 </template>
 
