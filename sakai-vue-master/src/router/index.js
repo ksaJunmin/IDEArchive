@@ -39,11 +39,6 @@ const router = createRouter({
                     component: () => import('@/views/board/3.vue')
                 },
                 {
-                    path: '/board/login',
-                    name: 'loginpage',
-                    component: () => import('@/views/board/login.vue')
-                },
-                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')
@@ -191,9 +186,9 @@ const router = createRouter({
             component: () => import('@/views/pages/auth/Login.vue')
         },
         {
-            path: '/auth/login-copy',
-            name: 'logincopy',
-            component: () => import('@/views/pages/auth/login-copy.vue')
+            path: '/loginpage',
+            name: 'loginpage',
+            component: () => import('@/views/board/loginpage.vue')
         },
         {
             path: '/auth/access',
