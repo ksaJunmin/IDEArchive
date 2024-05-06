@@ -11,6 +11,12 @@ const checked = ref(false);
 const logoUrl = computed(() => {
     return `/layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const goToMain = () => {
+    router.push('/');
+};
 </script>
 
 <template>
@@ -39,7 +45,7 @@ const logoUrl = computed(() => {
                             </div>
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">비밀번호를 잊으셨나요?</a>
                         </div>
-                        <Button label="로그인" class="w-full p-3 text-xl"></Button>
+                        <Button label="로그인" class="w-full p-3 text-xl" @click="goToMain()"></Button>
                     </div>
                 </div>
             </div>
