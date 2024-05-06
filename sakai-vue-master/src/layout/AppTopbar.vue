@@ -27,7 +27,7 @@ const onTopBarMenuButton = () => {
 };
 const onLoginClick = () => {
     topbarMenuActive.value = false;
-    router.push('/auth/login-copy');
+    router.push('/loginpage');
 };
 const onSettingsClick = () => {
     topbarMenuActive.value = false;
