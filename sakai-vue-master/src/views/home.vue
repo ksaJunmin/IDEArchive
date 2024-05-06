@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { ProductService } from '@/service/ProductService';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const dataviewValue = ref(null);
 const dataviewValue2 = ref(null);
 const layout = ref('grid');
@@ -21,6 +23,11 @@ onMounted(() => {
         dataviewValue2.value = sortedDataLatest.slice(0, 3);
     });
 });
+
+const goPost = (postId) => {
+    router.push(`/post/${postId}`);
+};
+
 </script>
 
 <template>
@@ -34,11 +41,11 @@ onMounted(() => {
                         <h5>추천순 상위 3개</h5>
                         <div class="grid grid-nogutter">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
-                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
+                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer " @click="goPost(item.id)">
                                     <div>
-                                        <div class="flex flex-row justify-content-between align-items-start gap-2">
+                                        <div class="flex flex-row justify-content-between align-items-start">
                                             <div class="min-w-0">
-                                                <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.name }}</div>
+                                                <div class="text-lg font-medium text-900 mt-2 ellipsis" >{{ item.name }}</div>
                                                 <div class="font-medium text-secondary text-sm ellipsis">{{ item.description}}</div>
                                             </div>
                                             <div class="surface-100 p-1" style="border-radius: 30px">
@@ -48,12 +55,9 @@ onMounted(() => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="flex flex-column gap-4 mt-4">
-                                            <div class="flex gap-2">
-                                                <Button icon="pi pi-thumbs-up"></Button>
-                                                <Button icon="pi pi-thumbs-down" outlined></Button>
-                                            </div>
-                                        </div>
+                                        <div class="flex flex-column gap-2 mt-4">
+                                            <div class="text-sm text-gray-500">{{ item.time }}</div>
+                                        </div>  
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +76,7 @@ onMounted(() => {
                         <h5>최신순 상위 3개</h5>
                         <div class="grid grid-nogutter">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
-                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
+                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goPost(item.id)">
                                     <div>
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
                                             <div class="min-w-0">                       
@@ -86,11 +90,8 @@ onMounted(() => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="flex flex-column gap-4 mt-4">
-                                            <div class="flex gap-2">
-                                                <Button icon="pi pi-thumbs-up"></Button>
-                                                <Button icon="pi pi-thumbs-down" outlined></Button>
-                                            </div>
+                                        <div class="flex flex-column gap-2 mt-4">
+                                            <div class="text-sm text-gray-500">{{ item.time }}</div>
                                         </div>
                                     </div>
                                 </div>

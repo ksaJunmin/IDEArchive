@@ -61,7 +61,7 @@ const onSortChange = (event) => {
                         <div class="grid grid-nogutter">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
                                 <div class="flex flex-column p-4 gap-3" :class="{ 'border-top-1 surface-border': index !== 0 }">
-                                    <div class="flex flex-column justify-content-between flex-1 gap-4">
+                                    <div class="flex flex-column justify-content-between flex-1">
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
                                             <div class="min-w-0">
                                                 <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.name }}</div>
@@ -73,6 +73,9 @@ const onSortChange = (event) => {
                                                     <i class="pi pi-thumbs-up"></i>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="flex flex-column gap-2 mt-4">
+                                            <div class="text-sm text-gray-500">{{ item.time }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -90,18 +93,17 @@ const onSortChange = (event) => {
                                                 <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.name }}</div>
                                                 <div class="font-medium text-secondary text-sm ellipsis">{{ item.description}}</div>
                                             </div>
-                                            <div class="surface-100 p-1" style="border-radius: 30px">
-                                                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                                                    <div class="text-900 font-medium text-sm">{{ item.rating }}</div>
-                                                    <i class="pi pi-thumbs-up"></i>
+                                            <div>
+                                                <div class="surface-100 p-1" style="border-radius: 30px">
+                                                    <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                                                        <div class="text-900 font-medium text-sm">{{ item.rating }}</div>
+                                                        <i class="pi pi-thumbs-up"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="flex flex-column gap-4 mt-4">
-                                            <div class="flex gap-2">
-                                                <Button icon="pi pi-thumbs-up"></Button>
-                                                <Button icon="pi pi-thumbs-down" outlined></Button>
-                                            </div>
+                                        <div class="flex flex-column gap-2 mt-4">
+                                            <div class="text-sm text-gray-500">{{ item.time }}</div>
                                         </div>
                                     </div>
                                 </div>

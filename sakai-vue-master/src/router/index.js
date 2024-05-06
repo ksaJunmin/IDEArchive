@@ -40,6 +40,16 @@ const router = createRouter({
                     component: () => import('@/views/board/3.vue')
                 },
                 {
+                    path: '/board/login',
+                    name: 'loginpage',
+                    component: () => import('@/views/board/login.vue')
+                },
+                {
+                    path: '/post/:id',
+                    name: 'post',
+                    component: () => import('@/views/post/post.vue')
+                },
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')
@@ -58,7 +68,7 @@ const router = createRouter({
                 {
                     path: '/uikit/invalidstate',
                     name: 'invalidstate',
-                    component: () => import('@/views/uikit/InvalidState.vue')
+                     component: () => import('@/views/uikit/InvalidState.vue')
                 },
                 {
                     path: '/uikit/button',
