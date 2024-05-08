@@ -1,7 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { ProductService } from '@/service/ProductService';
 import AppConfig from '@/layout/AppConfig.vue';
 

@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { ProductService } from '@/service/ProductService';
 import { useRouter } from 'vue-router';
 
@@ -24,8 +23,8 @@ onMounted(() => {
     });
 });
 
-const goPost = (postId) => {
-    router.push(`/post/${postId}`);
+const goToPost = (id) => {
+  router.push('/post/'+ id);
 };
 
 </script>
@@ -41,7 +40,7 @@ const goPost = (postId) => {
                         <h5>추천순 상위 3개</h5>
                         <div class="grid grid-nogutter">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
-                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer " @click="goPost(item.id)">
+                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer " @click="goToPost(item.id)">
                                     <div>
                                         <div class="flex flex-row justify-content-between align-items-start">
                                             <div class="min-w-0">
@@ -76,7 +75,7 @@ const goPost = (postId) => {
                         <h5>최신순 상위 3개</h5>
                         <div class="grid grid-nogutter">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
-                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goPost(item.id)">
+                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goToPost(item.id)">
                                     <div>
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
                                             <div class="min-w-0">                       
