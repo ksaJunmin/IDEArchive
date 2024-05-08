@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue';
-
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { ProductService } from '@/service/ProductService';
 import AppConfig from '@/layout/AppConfig.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
 const sortKey = ref(null);
@@ -38,6 +38,9 @@ const onSortChange = (event) => {
     }
 };
 
+const goToPost = (id) => {
+  router.push('/post/'+ id);
+};
 
 
 import { FilterMatchMode } from 'primevue/api';
@@ -142,7 +145,7 @@ const initFilters = () => {
 					<template #list="slotProps">
                         <div class="grid grid-nogutter">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
-                                <div class="flex flex-column p-4 gap-3" :class="{ 'border-top-1 surface-border': index !== 0 }">
+                                <div class="flex flex-column p-4 gap-3 cursor-pointer" :class="{ 'border-top-1 surface-border': index !== 0 }" @click="goToPost(item.id)">
                                     <div class="flex flex-column justify-content-between flex-1">
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
                                             <div class="min-w-0">
@@ -168,7 +171,7 @@ const initFilters = () => {
                     <template #grid="slotProps">
                         <div class="grid grid-nogutter">
                             <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
-                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
+                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goToPost(item.id)">
                                     <div>
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
                                             <div class="min-w-0">                       
