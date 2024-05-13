@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
-const sortKey = ref(null);
+const sortKey = ref('id');
 const sortOrder = ref(null);
 const sortField = ref(null);
 const sortOptions = ref([
@@ -20,7 +20,7 @@ const sortOptions = ref([
 const productService = new ProductService();
 
 onMounted(() => {
-    productService.getProductsSmall().then((data) => (dataviewValue.value = data, products.value = data));
+    productService.getProductsSmall1().then((data1) => (dataviewValue.value = data1, products.value = data1));
 });
 
 const onSortChange = (event) => {
@@ -127,7 +127,6 @@ const initFilters = () => {
                     <template v-slot:start>
                         <div class="my-2">
                             <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="openNew" />
-                            <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
                         </div>
                     </template>
                 </Toolbar>
@@ -135,7 +134,7 @@ const initFilters = () => {
                     <template #header>
                         <div class="grid grid-nogutter">
                             <div class="col-6 text-left">
-                                <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="추천 순 정렬" @change="onSortChange($event)" />
+                                <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="최신순" @change="onSortChange($event)" />
                             </div>
                             <div class="col-6 text-right">
                                 <DataViewLayoutOptions v-model="layout" />

@@ -25,8 +25,7 @@ const goToMain = () => {
             <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />
             <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
-                    <div class="text-center mb-5">
-                        <img src="/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3" />
+                    <div class="text-center">
                         <div class="text-900 text-3xl font-medium mb-3">아이디어 아카이브 로그인</div>
                         <span class="text-600 font-medium">계속하려면 로그인하세요</span>
                     </div>

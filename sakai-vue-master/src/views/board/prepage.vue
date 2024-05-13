@@ -49,11 +49,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* 화면 세로 중앙 정렬을 위해 추가 */
 }
 
 .logo {
-    margin-top: 250px;
     font-size: 10rem;
     font-weight: bold;
 }

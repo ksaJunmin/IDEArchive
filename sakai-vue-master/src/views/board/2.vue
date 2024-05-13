@@ -20,7 +20,7 @@ const sortOptions = ref([
 const productService = new ProductService();
 
 onMounted(() => {
-    productService.getProductsSmall().then((data) => (dataviewValue.value = data, products.value = data));
+    productService.getProductsSmall2().then((data2) => (dataviewValue.value = data2, products.value = data2));
 });
 
 const onSortChange = (event) => {
@@ -127,7 +127,6 @@ const initFilters = () => {
                     <template v-slot:start>
                         <div class="my-2">
                             <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="openNew" />
-                            <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
                         </div>
                     </template>
                 </Toolbar>
