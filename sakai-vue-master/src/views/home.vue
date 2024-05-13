@@ -15,7 +15,7 @@ const sortField2 = ref(null);
 const productService = new ProductService();
 
 onMounted(() => {
-    productService.getProductsSmall().then((data) => {
+    Promise.all([productService.getProductsSmall1(), productService.getProductsSmall2()]).then(([data1, data2]) => {
         const sortedDataRcmest = data.sort((a, b) => b.rating - a.rating);
         dataviewValue.value = sortedDataRcmest.slice(0, 3);
         const sortedDataLatest = data.sort((a, b) => b.id - a.id);
