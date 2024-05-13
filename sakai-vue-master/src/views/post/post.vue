@@ -10,8 +10,12 @@ const postId = ref(route.params.id);
 const post = ref(null);
 
 onMounted(async () => {
-  const data = await postService.getProductsSmall();
-  post.value = data.find(p => p.id === postId.value);
+    const data = await postService.getProductsSmall1();
+    post.value = data.find(p => p.id === postId.value);
+    if (post.value === undefined) {
+        const data = await postService.getProductsSmall2();
+        post.value = data.find(p => p.id === postId.value);
+    }
 });
 
 watch(post, (newValue, oldValue) => {})
