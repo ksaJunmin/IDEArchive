@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     trim: true, // 스페이스를 없애주는 역할
-    unique: 1, // 중복을 허용하지 않는다
+    unique: 1, // 중복을 허용하지 않는다.
   },
   password: {
     type: String,
