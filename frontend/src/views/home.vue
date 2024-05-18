@@ -44,6 +44,13 @@ const foo = () => {
 <template>
     <div>
     <Button @click="foo"> submit </Button>
+    <div class="home">
+        <form action="/users" method="POST">
+            <input type="text" name="id">
+            <input type="text" name="password">
+            <input type="submit">
+        </form>
+    </div>
     <p v-if="responseMessage">{{ responseMessage }}</p>
     <p v-else>No users available.</p>
     </div>
