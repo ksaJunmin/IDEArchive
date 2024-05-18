@@ -3,12 +3,6 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-<<<<<<< Updated upstream
- 
-=======
-import mongoose from 'mongoose'
-import indexRouter from './routes/index.js';
->>>>>>> Stashed changes
 import usersRouter from './routes/users.js';
 
 const app = express();
@@ -44,26 +38,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-<<<<<<< Updated upstream
-=======
 // 몽구스 연결
->>>>>>> Stashed changes
 import { connect } from 'mongoose';
 connect(
     'mongodb+srv://ksaJunmin:ww234700@ksajunmin.hiq5vra.mongodb.net/'
   )
-<<<<<<< Updated upstream
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => {
-    console.log("not connected");
-  });
-
-=======
   .then(() => console.log('MongoDB conected'))
   .catch((err) => {
     console.log("fuckyou");
   });
 
 
->>>>>>> Stashed changes
 export default app;
