@@ -31,11 +31,11 @@ const goToPost = (id) => {
   router.push('/post/'+ id);
 };
 
-const users = ref([]);
+const responseMessage = ref('');
 const foo = () => {
     axiosInstance.get('/users')
         .then(response => {
-            users.value = response.data;
+            responseMessage.value = response.data;
         })
 };
 
@@ -44,11 +44,7 @@ const foo = () => {
 <template>
     <div>
     <Button @click="foo"> submit </Button>
-    <ul v-if="users.length > 0">
-      <li v-for="user in users" :key="user.id">
-        {{ user.name }}
-      </li>
-    </ul>
+    <p v-if="responseMessage">{{ responseMessage }}</p>
     <p v-else>No users available.</p>
     </div>
     <h3><strong>IDEArchive</strong>에 오신 걸 환영합니다!</h3>
