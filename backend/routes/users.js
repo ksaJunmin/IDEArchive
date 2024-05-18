@@ -13,4 +13,7 @@ router.post('/', function(req,res){
     data:req.body.password
   })
 })
+router.get('/', function(req,res,next){
+  res.send('asdf');
+})
 export default router;
