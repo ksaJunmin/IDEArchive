@@ -42,13 +42,6 @@ const foo = () => {
 </script>
 
 <template>
-    <div class="home">
-    <form action="/users" method="POST">
-      <input type="text" name="id">
-      <input type="text" name="password">
-      <input type="submit">
-    </form>
-  </div>
     <div>
     <Button @click="foo"> submit </Button>
     <div class="home">
