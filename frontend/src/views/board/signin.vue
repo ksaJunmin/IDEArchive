@@ -1,4 +1,5 @@
-<script setup>import { ref } from 'vue';
+<script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 const router = useRouter();
@@ -10,9 +11,56 @@ const form = ref({
   password: ''
 });
 
+//add
+const errors = ref({
+  name: '',
+  schoolID: '',
+  email: '',
+  password: ''
+});
+
+const validateForm = () => {
+  let valid = true;
+  if (form.value.name === '') {
+    errors.value.name = '이름을 입력하세요';
+    valid = false;
+  } else {
+    errors.value.name = '';
+  }
+
+  if (form.value.schoolID.length !== 6) {
+    errors.value.schoolID = '학번은 6자리여야 합니다';
+    valid = false;
+  } else {
+    errors.value.schoolID = '';
+  }
+
+  if (form.value.password.length < 8) {
+    errors.value.password = '비밀번호는 8자 이상이어야 합니다';
+    valid = false;
+  } else {
+    errors.value.password = '';
+  }
+
+  return valid;
+};
+
+
+
 const register = async () => {
-    router.push({ name: 'Home' });
+
+    //add2
+  if (!validateForm()) {
+    return;
+  }
+  try {
+    router.push('/');  // 홈페이지 경로로 이동
     const response = await axios.post('http://localhost:3000/users', form.value);
+    alert(response.data);
+  } catch (error) {
+    alert('사용자 등록 오류: ' + (error.response ? error.response.data : error.message));
+    
+  }
 };
 </script>
 
