@@ -1,31 +1,28 @@
-<script setup>
-/*misc import*/
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+<script setup>import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-const value = ref(0);
-let interval = null;
+const userProfile = ref(null);
 
-const startProgress = () => {
-    interval = setInterval(() => {
-        let newValue = value.value + Math.floor(Math.random() * 10) + 1;
-        if (newValue >= 100) {
-            newValue = 100;
-        }
-        value.value = newValue;
-    }, 2000);
+const fetchUserProfile = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const response = await axios.get('http://localhost:3000/users/myprofile', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    userProfile.value = response.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+  }
 };
-const endProgress = () => {
-    clearInterval(interval);
-    interval = null;
-};
 
-onMounted(() => {
-    startProgress();
-});
-
-onBeforeUnmount(() => {
-    endProgress();
-});
+onMounted(fetchUserProfile);
 </script>
 
 <template>
@@ -48,14 +45,16 @@ onBeforeUnmount(() => {
         <div class="col-12 md:col-9">
             <div class="card p-fluid">
                 <h5>기본정보</h5>
-                <div class="field">
-                    <label for="name1" class="large-font">이름: <strong>홍정우</strong></label>
-                </div>
-                <div class="field">
-                    <label for="email1" class="large-font">학번: <strong>23-129</strong></label>
-                </div>
-                <div class="field">
-                    <label for="age1" class="large-font">이메일: <strong>23-129@ksa.hs.kr</strong></label>
+                <div>
+                    <div class="field">
+                        <label for="name" class="large-font">이름: <strong>{{ userProfile.name }}</strong></label>
+                    </div>
+                    <div class="field">
+                        <label for="schoolID" class="large-font">학번: <strong>{{ userProfile.schoolID }}</strong></label>
+                    </div>
+                    <div class="field">
+                        <label for="email" class="large-font">이메일: <strong>{{ userProfile.email }}</strong></label>
+                    </div>
                 </div>
             </div>
         </div>

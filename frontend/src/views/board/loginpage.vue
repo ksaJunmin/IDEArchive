@@ -2,6 +2,7 @@
 import { useLayout } from '@/layout/composables/layout';
 import { ref, computed } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
+import axios from 'axios';
 
 const { layoutConfig } = useLayout();
 const email = ref('');
@@ -14,8 +15,28 @@ const logoUrl = computed(() => {
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
-const goToMain = () => {
+
+const loginError = ref(null);
+
+const login = async () => {
+try {
+    const response = await axios.post('http://localhost:3000/users/login', {
+    email: email.value,
+    password: password.value
+    });
+    
+    // 서버로부터 토큰 등의 인증 정보를 받아 적절히 처리
+    const token = response.data.token;
+    
+    // 토큰을 localStorage에 저장
+    localStorage.setItem('token', token);
+
+    // 로그인 성공 후 홈페이지로 이동
     router.push('/');
+} catch (error) {
+    loginError.value = 'Invalid email or password';
+    console.error('Error logging in:', error);
+    }
 };
 </script>
 
@@ -30,12 +51,12 @@ const goToMain = () => {
                         <span class="text-600 font-medium">계속하려면 로그인하세요</span>
                     </div>
 
-                    <div>
-                        <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <InputText id="email1" type="text" placeholder="example@ksa.hs.kr" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
+                    <form @submit.prevent="login">
+                        <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+                        <InputText id="email" type="email" placeholder="example@ksa.hs.kr" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
 
-                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                        <Password id="password1" v-model="password" :feedback="false" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
+                        <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
+                        <Password type="password" id="password" v-model="password" :feedback="false" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
 
                         <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">
@@ -44,8 +65,8 @@ const goToMain = () => {
                             </div>
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">비밀번호를 잊으셨나요?</a>
                         </div>
-                        <Button label="로그인" class="w-full p-3 text-xl" @click="goToMain()"></Button>
-                    </div>
+                        <Button label="로그인" class="w-full p-3 text-xl" type="submit"></Button>
+                    </form>
                 </div>
             </div>
         </div>
