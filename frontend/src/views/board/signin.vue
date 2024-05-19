@@ -44,7 +44,7 @@ const register = async () => {
                         <Password v-model="form.password" :feedback="false" variant="filled" label="비밀번호를 입력하세요" />
                     </div>
                     <Button label="확인" class="w-full p-3 text-xl" type="submit"></Button>
-                    </form>
+                </form>
             </div>
         </div>
     </div>
