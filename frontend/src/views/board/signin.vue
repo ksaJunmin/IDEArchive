@@ -1,36 +1,23 @@
 <script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-const router = useRouter();
-const goToMain = () => {
-    router.push('/');
-};
-</script>
-
-<script>
-
 import axios from 'axios';
+const router = useRouter();
 
-export default {
-  data() {
-    return {
-      form: {
-        name: '',
-        schoolID: '',
-        email: '',
-        password: ''
-      }
-    };
-  },
-  methods: {
-    async register() {
-      try {
-        const response = await axios.post('http://localhost:3000/users', this.form);
-        alert(response.data);
-        router.push('/');
-      } catch (error) {
-        alert('Error registering user: ' + error.response.data);
-      }
-    }
+const form = ref({
+  name: '',
+  schoolID: '',
+  email: '',
+  password: ''
+});
+
+const register = async () => {
+  try {
+    const response = await axios.post('http://localhost:3000/users', form.value);
+    alert(response.data);
+    router.push('/');  // 홈페이지 경로로 이동
+  } catch (error) {
+    alert('사용자 등록 오류: ' + (error.response ? error.response.data : error.message));
   }
 };
 </script>
