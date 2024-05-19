@@ -63,7 +63,7 @@ const register = async () => {
   }
   try {
     router.push('/');  // 홈페이지 경로로 이동
-    const response = await axios.post('http://localhost:3000/users', form.value);
+    const response = await axios.post('http://localhost:3000/users/signin', form.value);
     //alert(response.data);
   } catch (error) {
     alert('사용자 등록 오류: ' + (error.response ? error.response.data : error.message));

@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 const router = express.Router();
 import User from '../db/user.js';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 const secretKey = 'your_secret_key';
 
@@ -26,7 +26,7 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-router.post('/', async function (req, res) {
+router.post('/signin', async function (req, res) {
   console.log('Request received: ', req.body);
 
   // 새로운 사용자 인스턴스를 생성
