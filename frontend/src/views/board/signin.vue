@@ -11,13 +11,8 @@ const form = ref({
 });
 
 const register = async () => {
-  try {
+    router.push({ name: 'Home' });
     const response = await axios.post('http://localhost:3000/users', form.value);
-    alert(response.data);
-    router.push('/');  // 홈페이지 경로로 이동
-  } catch (error) {
-    alert('사용자 등록 오류: ' + (error.response ? error.response.data : error.message));
-  }
 };
 </script>
 
