@@ -42,18 +42,6 @@ const foo = () => {
 </script>
 
 <template>
-    <div>
-    <Button @click="foo"> submit </Button>
-    <div class="home">
-        <form action="/users" method="POST">
-            <input type="text" name="id">
-            <input type="text" name="password">
-            <input type="submit">
-        </form>
-    </div>
-    <p v-if="responseMessage">{{ responseMessage }}</p>
-    <p v-else>No users available.</p>
-    </div>
     <h3><strong>IDEArchive</strong>에 오신 걸 환영합니다!</h3>
     
 

@@ -8,11 +8,11 @@ const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
 const sortKey = ref(null);
-const sortOrder = ref(null);
-const sortField = ref(null);
+const sortOrder = ref(-1);
+const sortField = ref('title');
 const sortOptions = ref([
-    { label: '최신순', value: '!id' },
-    { label: '오래된 순', value: 'id' },
+    { label: '최신순', value: '!title' },
+    { label: '오래된 순', value: 'title' },
     { label: '추천 높은 순', value: '!rating' },
     { label: '추천 낮은 순', value: 'rating' }
 ]);
