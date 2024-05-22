@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import { ProductService } from '@/service/ProductService';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
+import axios from 'axios';
 
 const axiosInstance = inject('http');
 
@@ -39,9 +40,29 @@ const foo = () => {
         })
 };
 
+const handleIncreasePoints = async () => {
+    try {
+      const response = await axios.post('/points/increase-points');
+      console.log(response.data); // You can handle success response here
+    } catch (error) {
+      console.error('There was an error increasing the points!', error);
+    }
+};
 </script>
 
 <template>
+    <div>
+    <Button @click="handleIncreasePoints"> submit </Button>
+    <div class="home">
+        <form action="/users" method="POST">
+            <input type="text" name="id">
+            <input type="text" name="password">
+            <input type="submit">
+        </form>
+    </div>
+    <p v-if="responseMessage">{{ responseMessage }}</p>
+    <p v-else>No users available.</p>
+    </div>
     <h3><strong>IDEArchive</strong>에 오신 걸 환영합니다!</h3>
     
 

@@ -4,6 +4,8 @@ const router = express.Router();
 import User from '../db/user.js';
 import jwt from 'jsonwebtoken';
 
+import bcrypt from 'bcrypt'
+
 const secretKey = 'your_secret_key';
 
 router.use(bodyParser.urlencoded({extended:false}));
@@ -25,6 +27,8 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+
+
 
 router.post('/signin', async function (req, res) {
   console.log('Request received: ', req.body);

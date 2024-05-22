@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import bcrypt from 'bcrypt'
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     minlength: 8,
+    
   },
   role: {
     // 관리자와 일반 유저를 구분하기 위한 역할
@@ -31,7 +32,12 @@ const userSchema = new mongoose.Schema({
   tokenExp: {
     type: Number,
   },
+  point: {
+    type: Number,
+    default: 0, 
+  },
 });
+
 
 const User = mongoose.model('User', userSchema); // 스키마를 모델로 감싸준다.
 
