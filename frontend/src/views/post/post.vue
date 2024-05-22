@@ -9,6 +9,16 @@ const route = useRoute();
 const postId = ref(route.params.postId);
 const post = ref(null);
 
+const handleLike = (value) => {
+  postService.updateLike(postId.value, post.value.like + value)
+    .then((updatedPost) => {
+      post.value = updatedPost;
+    })
+    .catch((error) => {
+      console.error('Error updating like:', error);
+    });
+};
+
 onMounted(async () => {
   try {
     const data = await postService.getPostById(postId.value);
@@ -44,8 +54,8 @@ watch(post, (newValue, oldValue) => {})
                     <div>
                         <div class="flex flex-column mt-4 align-items-center justify-center">
                             <div class="flex gap-2">
-                                <Button label="좋아요" icon="pi pi-thumbs-up"></Button>
-                                <Button label="싫어요" icon="pi pi-thumbs-down" outlined></Button>
+                                <Button label="좋아요" icon="pi pi-thumbs-up" @click="handleLike(1)"></Button>
+                                <Button label="싫어요" icon="pi pi-thumbs-down" outlined @click="handleLike(-1)"></Button>
                             </div>
                         </div>
                     </div>

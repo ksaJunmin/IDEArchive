@@ -3,32 +3,13 @@ import express from 'express';
 const router = express.Router();
 import User from '../db/user.js';
 import jwt from 'jsonwebtoken';
+import { authenticateToken } from './auth.js';
 
 import bcrypt from 'bcrypt'
 
 const secretKey = 'your_secret_key';
 
 router.use(bodyParser.urlencoded({extended:false}));
-
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.sendStatus(401); // 토큰이 없으면 401 Unauthorized 반환
-  }
-
-  jwt.verify(token, 'your_secret_key', (err, user) => {
-    if (err) {
-      return res.sendStatus(403); // 토큰이 유효하지 않으면 403 Forbidden 반환
-    }
-
-    req.user = user; // 유효한 토큰이면 req.user에 사용자 정보 설정
-    next();
-  });
-};
-
-
 
 router.post('/signin', async function (req, res) {
   console.log('Request received: ', req.body);
@@ -66,7 +47,7 @@ router.post('/login', async (req, res) => {
     }
 
     // JWT 생성
-    const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
 
     res.json({ token });
   } catch (error) {

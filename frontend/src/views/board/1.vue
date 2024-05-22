@@ -10,10 +10,10 @@ const dataviewValue = ref(null);
 const layout = ref('list');
 const sortKey = ref(null);
 const sortOrder = ref(-1);
-const sortField = ref('title');
+const sortField = ref('_id');
 const sortOptions = ref([
-  { label: '최신순', value: '!title' },
-  { label: '오래된 순', value: 'title' },
+  { label: '최신순', value: '!_id' },
+  { label: '오래된 순', value: '_id' },
   { label: '추천 높은 순', value: '!like' },
   { label: '추천 낮은 순', value: 'like' }
 ]);
@@ -92,7 +92,7 @@ const goToAddPost = () => {
                       </div>
                     </div>
                     <div class="flex flex-column gap-2 mt-4">
-                      <div class="text-sm text-gray-500">{{ item.date }}</div>
+                      <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
                     </div>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ const goToAddPost = () => {
                       </div>
                     </div>
                     <div class="flex flex-column gap-2 mt-4">
-                      <div class="text-sm text-gray-500">{{ item.date }}</div>
+                      <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
                     </div>
                   </div>
                 </div>
