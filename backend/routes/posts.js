@@ -34,4 +34,17 @@ router.get('/:postId', async (req, res) => {
   }
 });
 
+router.patch('/:postId/like', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json('Post not found');
+
+    post.like = req.body.like;
+    const updatedPost = await post.save();
+    res.json(updatedPost);
+  } catch (err) {
+    res.status(400).json('Error: ' + err);
+  }
+});
+
 export default router;

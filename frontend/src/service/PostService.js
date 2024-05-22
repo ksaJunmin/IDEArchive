@@ -14,6 +14,22 @@ export class PostService {
           })
           .then((data) => data);
     }
+    updateLike(postId, like) {
+        return fetch('http://localhost:3000/posts/' + postId + '/like', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ like }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
+          .then((data) => data);
+      }
     getProductsSmall2() {
         return fetch('/demo/data/products-small.json', { headers: { 'Cache-Control': 'no-cache' } })
             .then((res) => res.json())
