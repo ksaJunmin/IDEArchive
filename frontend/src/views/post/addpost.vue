@@ -1,8 +1,8 @@
 <template>
   <div class="grid justify-content-center">
-    <div class="col-12 md:col-6">
+    <div class="col-12 md:col-10">
       <div>
-        <h2 class="text-center">새 글 작성</h2>
+        <h2 ><strong>새 글 작성</strong></h2>
         <form @submit.prevent="addPost">
           <div class="field">
             <label for="title">제목</label>
@@ -10,7 +10,7 @@
           </div>
           <div class="field">
             <label for="body">본문</label>
-            <Textarea v-model="content" id="body" required rows="5" cols="30" />
+            <Textarea v-model="content" id="body" required rows="12" cols="120" class="full" />
           </div>
 
           <div class="field">

@@ -99,7 +99,7 @@ const register = async () => {
             <small v-if="errors.password" class="p-error">{{ errors.password }}</small>
           </div>
           <Button label="확인" class="w-full p-3 text-xl" type="submit"></Button>
-        </form>
+        </form> 
         <div v-if="errorMessage" class="error-message">
           {{ errorMessage }}
         </div>
