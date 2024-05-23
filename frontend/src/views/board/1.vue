@@ -18,7 +18,20 @@ const sortOptions = ref([
   { label: '추천 낮은 순', value: 'like' }
 ]);
 
+const sortSubject = ref([
+  { label: '전체', value: '전체'},
+  { label: '수학', value: '수학' },
+  { label: '화학', value: '화학' },
+  { label: '정보', value: '정보' },
+  { label: '생물', value: '생물' },
+  { label: '물리', value: '물리' },
+  { label: '지구과학', value: '지구과학' },
+  { label: '인문', value: '인문' },
+  { label: '기타', value: '기타' },
+]);
+
 const postService = new PostService();
+
 
 onMounted(() => {
   postService.getPosts().then((data) => {
@@ -39,6 +52,18 @@ const onSortChange = (event) => {
     sortField.value = value;
     sortKey.value = sortValue;
   }
+};
+ 
+const onSortSubject = (event) => {
+  const selectedSubject = event.value.value;
+
+  postService.getPosts().then((data) => {
+    if (selectedSubject === '전체') {
+      dataviewValue.value = data;
+    } else {
+      dataviewValue.value = data.filter(post => post.category === selectedSubject);
+    }
+  });
 };
 
 const goToPost = (id) => {
@@ -68,6 +93,7 @@ const goToAddPost = () => {
             <div class="grid grid-nogutter">
               <div class="col-6 text-left">
                 <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="최신순" @change="onSortChange($event)" />
+                <Dropdown v-model="sortKey" :options="sortSubject" optionLabel="label" placeholder="전체" @change="onSortSubject($event)" />
               </div>
               <div class="col-6 text-right">
                 <DataViewLayoutOptions v-model="layout" />

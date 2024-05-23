@@ -42,7 +42,7 @@ import AppConfig from '@/layout/AppConfig.vue';
 const title = ref('');
 const content = ref('');
 const selectedCategory = ref('');
-const categories = ['수학', '정보', '물리', '화학'];
+const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
 
 const addPost = async () => {
   const newPost = {

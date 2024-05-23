@@ -16,6 +16,12 @@ const PostSchema = new Schema({
   like: {
     type: Number,
     default: 0
+  },
+  likedBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+
+  category: {
+    type: String,
+    default: '기타'
   }
 });
 
