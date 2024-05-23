@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0, // 0은 일반 유저, 1은 관리자
   },
+  
   image: String,
   token: {
     type: String,
@@ -32,7 +33,7 @@ const userSchema = new mongoose.Schema({
   tokenExp: {
     type: Number,
   },
-  point: {
+  points: {
     type: Number,
     default: 0, 
   },

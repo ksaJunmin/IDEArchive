@@ -13,6 +13,10 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  category: {
+    type: String,
+    required: true
+  },
   like: {
     type: Number,
     default: 0

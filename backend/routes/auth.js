@@ -1,13 +1,27 @@
 import jwt from 'jsonwebtoken';
 const secretKey = 'your_secret_key';
 
-export const authenticateToken = (req, res, next) => {
-  const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
-  if (!token) return res.sendStatus(401);
+export const authenticateToken = async (req, res, next) => {
+  try {
+    const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'Access token missing' });
+    }
 
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.sendStatus(403);
+    const user = await new Promise((resolve, reject) => {
+      jwt.verify(token, secretKey, (err, decoded) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(decoded);
+        }
+      });
+    });
+
     req.user = user;
     next();
-  });
-}
+  } catch (err) {
+    console.error('Error authenticating token:', err);
+    return res.status(403).json({ message: 'Invalid token' });
+  }
+};

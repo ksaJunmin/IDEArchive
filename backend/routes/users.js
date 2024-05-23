@@ -57,17 +57,32 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.get('/myprofile', authenticateToken, async (req, res) => {
+router.get('/info', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.sendStatus(404); // 사용자가 없으면 404 Not Found 반환
+    }
+    res.json({ name: user.name, schoolID: user.schoolID, email: user.email, points: user.points });
+  
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.patch('/points', authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
     if (!user) {
       return res.sendStatus(404); // 사용자가 없으면 404 Not Found 반환
     }
 
-    res.json({ name: user.name, schoolID: user.schoolID, email: user.email });
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    user.points = req.body.points;
+    const updatedUser = await user.save();
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json('Error: ' + err);
   }
 });
 

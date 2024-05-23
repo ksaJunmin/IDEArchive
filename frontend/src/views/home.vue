@@ -1,11 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { ProductService } from '@/service/ProductService';
+import { PostService } from '@/service/PostService';
+import { UserService } from '@/service/UserService';
 import { useRouter } from 'vue-router';
-import { inject } from 'vue';
-import axios from 'axios';
-
-const axiosInstance = inject('http');
 
 const router = useRouter();
 const dataviewValue = ref(null);
@@ -16,131 +13,133 @@ const sortOrder2 = ref(null);
 const sortField = ref(null);
 const sortField2 = ref(null);
 
-const productService = new ProductService();
+const postService = new PostService();
+const userService = new UserService();
+
+const user = ref(null);
+const userId = ref(null);
 
 onMounted(() => {
-    Promise.all([productService.getProductsSmall1(), productService.getProductsSmall2()]).then(([data1, data2]) => {
+  postService.getPosts().then((data) => {
+    const sortedDataRcmest = data.sort((a, b) => b.like - a.like);
+    dataviewValue.value = sortedDataRcmest.slice(0, 3);
+    const sortedDataLatest = data.sort((a, b) => b._id - a._id);
+    dataviewValue2.value = sortedDataLatest.slice(0, 3);
+  });
+  /*Promise.all([postService.getpostsSmall1(), postService.getpostsSmall2()]).then(([data1, data2]) => {
         const data = [...data1, ...data2]
         const sortedDataRcmest = data.sort((a, b) => b.rating - a.rating);
         dataviewValue.value = sortedDataRcmest.slice(0, 3);
         const sortedDataLatest = data.sort((a, b) => b.id - a.id);
         dataviewValue2.value = sortedDataLatest.slice(0, 3);
-    });
+    });*/
 });
 
 const goToPost = (id) => {
-  router.push('/post/'+ id);
+  router.push('/post/' + id);
 };
 
-const responseMessage = ref('');
-const foo = () => {
-    axiosInstance.get('/users')
-        .then(response => {
-            responseMessage.value = response.data;
-        })
-};
-
-const handleIncreasePoints = async () => {
-    try {
-      const response = await axios.post('/points/increase-points');
-      console.log(response.data); // You can handle success response here
-    } catch (error) {
-      console.error('There was an error increasing the points!', error);
-    }
+const handlePoints = (value) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('No token found');
+  }
+  userService.fetchUser(token).then(() => {
+    user.value = data;
+  });
+  userService
+    .updatePoints(user.value.points + value)
+    .then((updatedUser) => {
+      user.value = updatedUser;
+    })
+    .catch((error) => {
+      console.error('Error updating points:', error);
+    });
 };
 </script>
 
 <template>
-    <div>
-    <Button @click="handleIncreasePoints"> submit </Button>
-    <div class="home">
-        <form action="/users" method="POST">
-            <input type="text" name="id">
-            <input type="text" name="password">
-            <input type="submit">
-        </form>
-    </div>
-    <p v-if="responseMessage">{{ responseMessage }}</p>
-    <p v-else>No users available.</p>
-    </div>
-    <h3><strong>IDEArchive</strong>에 오신 걸 환영합니다!</h3>
-    
+  <Button @click="handlePoints(100)"> submit </Button>
 
-    <div class="grid">
-        <div class="col-12">
-            <div class="card">
-                <DataView :value="dataviewValue" :layout="layout" :paginator="false" :rows="3" :sortOrder="sortOrder" :sortField="sortField">
-                    <template #grid="slotProps">
-                        <h5>추천순 상위 3개</h5>
-                        <div class="grid grid-nogutter">
-                            <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
-                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goToPost(item.id)">
-                                    <div>
-                                        <div class="flex flex-row justify-content-between align-items-start">
-                                            <div class="min-w-0">
-                                                <div class="text-lg font-medium text-900 mt-2 ellipsis" >{{ item.name }}</div>
-                                                <div class="font-medium text-secondary text-sm ellipsis">{{ item.description}}</div>
-                                            </div>
-                                            <div class="surface-100 p-1" style="border-radius: 30px">
-                                                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                                                    <div class="text-900 font-medium text-sm">{{ item.rating }}</div>
-                                                    <i class="pi pi-thumbs-up"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-column gap-2 mt-4">
-                                            <div class="text-sm text-gray-500">{{ item.time }}</div>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                </DataView>
-            </div>
-        </div>
-    </div>
+  <h3><strong>IDEArchive</strong>에 오신 걸 환영합니다!</h3>
 
-    <div class="grid">
-        <div class="col-12">
-            <div class="card">
-                <DataView :value="dataviewValue2" :layout="layout" :paginator="false" :rows="3" :sortOrder="sortOrder2" :sortField="sortField2">
-                    <template #grid="slotProps">
-                        <h5>최신순 상위 3개</h5>
-                        <div class="grid grid-nogutter">
-                            <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
-                                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goToPost(item.id)">
-                                    <div>
-                                        <div class="flex flex-row justify-content-between align-items-start gap-2">
-                                            <div class="min-w-0">                       
-                                                <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.name }}</div>
-                                                <div class="font-medium text-secondary text-sm ellipsis">{{ item.description}}</div>
-                                            </div>
-                                            <div class="surface-100 p-1" style="border-radius: 30px">
-                                                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                                                    <div class="text-900 font-medium text-sm">{{ item.rating }}</div>
-                                                    <i class="pi pi-thumbs-up"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-column gap-2 mt-4">
-                                            <div class="text-sm text-gray-500">{{ item.time }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+  <div class="grid">
+    <div class="col-12">
+      <div class="card">
+        <DataView :value="dataviewValue" :layout="layout" :paginator="false" :rows="3" :sortOrder="sortOrder" :sortField="sortField">
+          <template #grid="slotProps">
+            <h5>추천순 상위 3개</h5>
+            <div class="grid grid-nogutter">
+              <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
+                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goToPost(item._id)">
+                  <div>
+                    <div class="flex flex-row justify-content-between align-items-start">
+                      <div class="min-w-0">
+                        <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.title }}</div>
+                        <div class="font-medium text-secondary text-sm ellipsis">{{ item.content }}</div>
+                      </div>
+                      <div class="surface-100 p-1" style="border-radius: 30px">
+                        <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                          <div class="text-900 font-medium text-sm">{{ item.like }}</div>
+                          <i class="pi pi-thumbs-up"></i>
                         </div>
-                    </template>
-                </DataView>
+                      </div>
+                    </div>
+                    <div class="flex flex-row justify-content-between align-items-start mt-4">
+                      <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
+                      <div> 홍정우 <!-- {{ item.user }}--> </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+          </template>
+        </DataView>
+      </div>
     </div>
+  </div>
+
+  <div class="grid">
+    <div class="col-12">
+      <div class="card">
+        <DataView :value="dataviewValue2" :layout="layout" :paginator="false" :rows="3" :sortOrder="sortOrder2" :sortField="sortField2">
+          <template #grid="slotProps">
+            <h5>최신순 상위 3개</h5>
+            <div class="grid grid-nogutter">
+              <div v-for="(item, index) in slotProps.items" :key="index" class="col-12 sm:col-6 md:col-4 p-2">
+                <div class="p-4 border-1 surface-border surface-card border-round flex flex-column cursor-pointer" @click="goToPost(item._id)">
+                  <div>
+                    <div class="flex flex-row justify-content-between align-items-start gap-2">
+                      <div class="min-w-0">
+                        <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.title }}</div>
+                        <div class="font-medium text-secondary text-sm ellipsis">{{ item.content }}</div>
+                      </div>
+                      <div class="surface-100 p-1" style="border-radius: 30px">
+                        <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                          <div class="text-900 font-medium text-sm">{{ item.like }}</div>
+                          <i class="pi pi-thumbs-up"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex flex-row justify-content-between align-items-start mt-4">
+                      <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
+                      <div> 홍정우 <!-- {{ item.user }}--> </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </DataView>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>
-    .ellipsis {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>
