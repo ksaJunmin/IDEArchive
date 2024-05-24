@@ -10,10 +10,10 @@ const dataviewValue = ref(null);
 const layout = ref('list');
 const sortKey = ref(null);
 const sortOrder = ref(-1);
-const sortField = ref('_id');
+const sortField = ref('!data');
 const sortOptions = ref([
-  { label: '최신순', value: '!_id' },
-  { label: '오래된 순', value: '_id' },
+  { label: '최신순', value: '!data' },
+  { label: '오래된 순', value: 'data' },
   { label: '추천 높은 순', value: '!like' },
   { label: '추천 낮은 순', value: 'like' }
 ]);
@@ -93,7 +93,7 @@ const goToAddPost = () => {
             <div class="grid grid-nogutter">
               <div class="col-6 text-left">
                 <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="최신순" @change="onSortChange($event)" />
-                <Dropdown v-model="sortKey" :options="sortSubject" optionLabel="label" placeholder="전체" @change="onSortSubject($event)" />
+                <Dropdown v-model="selectedSubject" :options="sortSubject" optionLabel="label" placeholder="전체" @change="onSortSubject($event)" />
               </div>
               <div class="col-6 text-right">
                 <DataViewLayoutOptions v-model="layout" />

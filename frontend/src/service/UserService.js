@@ -18,18 +18,18 @@ export class UserService {
       throw error;
     }
   }
-  async updatePoints(point) {
-    const res = await axios.patch('http://localhost:3000/users/points', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ point })
-    });
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
+  async updatePoints(token, point) {
+    try {
+      const res = await axios.patch('http://localhost:3000/users/points', { point }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Error updating user points:', error);
+      throw error;
     }
-    const data = await res.json();
-    return data;
   }
 }

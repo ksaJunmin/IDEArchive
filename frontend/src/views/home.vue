@@ -44,11 +44,8 @@ const handlePoints = (value) => {
   if (!token) {
     throw new Error('No token found');
   }
-  userService.fetchUser(token).then(() => {
-    user.value = data;
-  });
   userService
-    .updatePoints(user.value.points + value)
+    .updatePoints(token, value)
     .then((updatedUser) => {
       user.value = updatedUser;
     })

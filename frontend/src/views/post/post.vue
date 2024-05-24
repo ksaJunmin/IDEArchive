@@ -1,5 +1,5 @@
 <script setup>
-/*
+
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { PostService } from '@/service/PostService';
@@ -10,43 +10,10 @@ const route = useRoute();
 const postId = ref(route.params.postId);
 const post = ref(null);
 
-const handleLike = (value) => {
-  postService.updateLike(postId.value, post.value.like + value)
-    .then((updatedPost) => {
-      post.value = updatedPost;
-    })
-    .catch((error) => {
-      console.error('Error updating like:', error);
-    });
-};
-
-onMounted(async () => {
-  try {
-    const data = await postService.getPostById(postId.value);
-    post.value = data;
-  } catch (error) {
-    console.error('Error fetching post:', error);
-  }
-});
-
-watch(post, (newValue, oldValue) => {})
-*/
-import { ref, onMounted, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { PostService } from '@/service/PostService';
-
-const postService = new PostService();
-const route = useRoute();
-
-const postId = ref(route.params.postId);
-const post = ref(null);
-const userId = ref('currentUserId'); // 실제 유저 ID를 설정
-
-const isLiked = computed(() => post.value?.likedBy?.includes(userId.value) || false);
-
 const handleLike = async () => {
+  const token = localStorage.getItem('token');
   try {
-    const updatedPost = await postService.updateLike(postId.value, userId.value,post.value.like);
+    const updatedPost = await postService.updateLike(token, postId.value);
     post.value = updatedPost;
   } catch (error) {
     console.error('Error updating like:', error);
@@ -61,6 +28,8 @@ onMounted(async () => {
     console.error('Error fetching post:', error);
   }
 });
+
+watch(post, (newValue, oldValue) => {})
 </script>
 
 

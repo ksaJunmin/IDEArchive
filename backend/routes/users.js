@@ -78,7 +78,7 @@ router.patch('/points', authenticateToken, async (req, res) => {
       return res.sendStatus(404); // 사용자가 없으면 404 Not Found 반환
     }
 
-    user.points = req.body.points;
+    user.points += req.body.point;
     const updatedUser = await user.save();
     res.json(updatedUser);
   } catch (err) {
