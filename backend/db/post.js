@@ -13,19 +13,19 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  category: {
-    type: String,
-    required: true
-  },
   like: {
     type: Number,
     default: 0
   },
-  likedBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-
+  likedBy: [{
+    type: Schema.Types.ObjectId, ref: 'User'
+  }],
   category: {
     type: String,
     default: '기타'
+  },
+  author: {
+    type: Schema.Types.ObjectId, ref: 'User'
   }
 });
 

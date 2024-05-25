@@ -17,7 +17,6 @@ const postService = new PostService();
 const userService = new UserService();
 
 const user = ref(null);
-const userId = ref(null);
 
 onMounted(() => {
   postService.getPosts().then((data) => {
@@ -28,10 +27,6 @@ onMounted(() => {
   });
   /*Promise.all([postService.getpostsSmall1(), postService.getpostsSmall2()]).then(([data1, data2]) => {
         const data = [...data1, ...data2]
-        const sortedDataRcmest = data.sort((a, b) => b.rating - a.rating);
-        dataviewValue.value = sortedDataRcmest.slice(0, 3);
-        const sortedDataLatest = data.sort((a, b) => b.id - a.id);
-        dataviewValue2.value = sortedDataLatest.slice(0, 3);
     });*/
 });
 
@@ -84,7 +79,7 @@ const handlePoints = (value) => {
                     </div>
                     <div class="flex flex-row justify-content-between align-items-start mt-4">
                       <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
-                      <div> 홍정우 <!-- {{ item.user }}--> </div>
+                      <div>{{ item.author.schoolID }} {{ item.author.name }}</div>
                     </div>
                   </div>
                 </div>
@@ -120,7 +115,7 @@ const handlePoints = (value) => {
                     </div>
                     <div class="flex flex-row justify-content-between align-items-start mt-4">
                       <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
-                      <div> 홍정우 <!-- {{ item.user }}--> </div>
+                      <div>{{ item.author.schoolID }} {{ item.author.name }}</div>
                     </div>
                   </div>
                 </div>

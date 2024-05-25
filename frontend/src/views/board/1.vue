@@ -8,12 +8,11 @@ import { PostService } from '@/service/PostService';
 const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
-const sortKey = ref(null);
 const sortOrder = ref(-1);
-const sortField = ref('!data');
+const sortField = ref('date');
 const sortOptions = ref([
-  { label: '최신순', value: '!data' },
-  { label: '오래된 순', value: 'data' },
+  { label: '최신순', value: '!date' },
+  { label: '오래된 순', value: 'date' },
   { label: '추천 높은 순', value: '!like' },
   { label: '추천 낮은 순', value: 'like' }
 ]);
@@ -31,7 +30,6 @@ const sortSubject = ref([
 ]);
 
 const postService = new PostService();
-
 
 onMounted(() => {
   postService.getPosts().then((data) => {
@@ -117,8 +115,10 @@ const goToAddPost = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="flex flex-column gap-2 mt-4">
+                    <div class="flex flex-row justify-content-between align-items-start mt-4">
                       <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
+                      <div v-if="item.author">{{ item.author.schoolID }} {{ item.author.name }}</div>
+                      <div v-else> 옛날 글 </div>
                     </div>
                   </div>
                 </div>
@@ -145,8 +145,10 @@ const goToAddPost = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="flex flex-column gap-2 mt-4">
+                    <div class="flex flex-row justify-content-between align-items-start mt-4">
                       <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
+                      <div v-if="item.author">{{ item.author.schoolID }} {{ item.author.name }}</div>
+                      <div v-else> 옛날 글 </div>
                     </div>
                   </div>
                 </div>

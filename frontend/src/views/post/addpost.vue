@@ -1,3 +1,47 @@
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import AppConfig from '@/layout/AppConfig.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const title = ref('');
+const content = ref('');
+const selectedCategory = ref('');
+const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
+
+const addPost = async () => {
+  const newPost = {
+    title: title.value,
+    content: content.value,
+    category: selectedCategory.value
+  };
+
+  try {
+    const token = localStorage.getItem('token');
+    await axios.post('http://localhost:3000/posts/add', newPost, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    alert('Post added successfully!');
+    clearForm();
+    router.push('/board/1');
+  } catch (error) {
+    console.error(error);
+    alert('Failed to add post');
+  }
+};
+
+const clearForm = () => {
+  title.value = '';
+  content.value = '';
+  selectedCategory.value = '';
+};
+</script>
+
 <template>
   <div class="grid justify-content-center">
     <div class="col-12 md:col-10">
@@ -33,40 +77,6 @@
   </div>
   <AppConfig simple />
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import AppConfig from '@/layout/AppConfig.vue';
-
-const title = ref('');
-const content = ref('');
-const selectedCategory = ref('');
-const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
-
-const addPost = async () => {
-  const newPost = {
-    title: title.value,
-    content: content.value,
-    category: selectedCategory.value,
-  };
-
-  try {
-    await axios.post('http://localhost:3000/posts/add', newPost);
-    clearForm();
-    alert('Post added successfully!');
-  } catch (error) {
-    console.error(error);
-    alert('Failed to add post');
-  }
-};
-
-const clearForm = () => {
-  title.value = '';
-  content.value = '';
-  selectedCategory.value = '';
-};
-</script>
 
 <style scoped>
 .grid {
