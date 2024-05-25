@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import usersRouter from './routes/users.js';
 import postsRouter from './routes/posts.js';
+import commentsRouter from './routes/comments.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(path.resolve(), '/public')));
 
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/comments', commentsRouter);
 app.get('*', (req, res) => {
   res.sendFile(path.join(path.resolve(), 'public', 'index.html'));
 });
@@ -47,9 +49,9 @@ import { connect } from 'mongoose';
 connect(
     'mongodb+srv://ksaJunmin:ww234700@ksajunmin.hiq5vra.mongodb.net/db'
   )
-  .then(() => console.log('MongoDB conected'))
+  .then(() => console.log('MongoDB connected'))
   .catch((err) => {
-    console.log("fuckyou");
+    console.log('Not connected!!!');
   });
 
 
