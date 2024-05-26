@@ -8,14 +8,25 @@ import { PostService } from '@/service/PostService.js';
 const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
-const sortKey = ref(null);
 const sortOrder = ref(-1);
-const sortField = ref('_id');
+const sortField = ref('date');
 const sortOptions = ref([
-  { label: '최신순', value: '!_id' },
-  { label: '오래된 순', value: '_id' },
+  { label: '최신순', value: '!date' },
+  { label: '오래된 순', value: 'date' },
   { label: '추천 높은 순', value: '!like' },
   { label: '추천 낮은 순', value: 'like' }
+]);
+
+const sortSubject = ref([
+  { label: '전체', value: '전체'},
+  { label: '수학', value: '수학' },
+  { label: '화학', value: '화학' },
+  { label: '정보', value: '정보' },
+  { label: '생물', value: '생물' },
+  { label: '물리', value: '물리' },
+  { label: '지구과학', value: '지구과학' },
+  { label: '인문', value: '인문' },
+  { label: '기타', value: '기타' },
 ]);
 
 const postService = new PostService();
@@ -40,6 +51,18 @@ const onSortChange = (event) => {
     sortKey.value = sortValue;
   }
 };
+ 
+const onSortSubject = (event) => {
+  const selectedSubject = event.value.value;
+
+  postService.getPosts().then((data) => {
+    if (selectedSubject === '전체') {
+      dataviewValue.value = data;
+    } else {
+      dataviewValue.value = data.filter(post => post.category === selectedSubject);
+    }
+  });
+};
 
 const goToPost = (id) => {
   router.push('/post/' + id);
@@ -48,10 +71,13 @@ const goToPost = (id) => {
 const goToAddPost = () => {
   router.push('/addpost');
 };
+const goToLatexPost = () => {
+  router.push('/latexpost');
+};
 </script>
 
 <template>
-  <h3>도와줘요 게시판</h3>
+  <h3>해줘요 게시판</h3>
 
   <div class="grid">
     <div class="col-12">
@@ -60,6 +86,7 @@ const goToAddPost = () => {
           <template v-slot:start>
             <div class="my-2">
               <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToAddPost" />
+              <Button label="수식 쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToLatexPost" />
             </div>
           </template>
         </Toolbar>
@@ -68,6 +95,7 @@ const goToAddPost = () => {
             <div class="grid grid-nogutter">
               <div class="col-6 text-left">
                 <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="최신순" @change="onSortChange($event)" />
+                <Dropdown v-model="selectedSubject" :options="sortSubject" optionLabel="label" placeholder="전체" @change="onSortSubject($event)" />
               </div>
               <div class="col-6 text-right">
                 <DataViewLayoutOptions v-model="layout" />
@@ -91,8 +119,10 @@ const goToAddPost = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="flex flex-column gap-2 mt-4">
+                    <div class="flex flex-row justify-content-between align-items-start mt-4">
                       <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
+                      <div v-if="item.author">{{ item.author.schoolID }} {{ item.author.name }}</div>
+                      <div v-else> 옛날 글 </div>
                     </div>
                   </div>
                 </div>
@@ -119,8 +149,10 @@ const goToAddPost = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="flex flex-column gap-2 mt-4">
+                    <div class="flex flex-row justify-content-between align-items-start mt-4">
                       <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
+                      <div v-if="item.author">{{ item.author.schoolID }} {{ item.author.name }}</div>
+                      <div v-else> 옛날 글 </div>
                     </div>
                   </div>
                 </div>
