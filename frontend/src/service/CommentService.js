@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000';
+const API = import.meta.env.API_URL
 
 export class CommentService {
   async fetchComments(postId) {
-    const res = await axios.get(`${API_URL}/comments/${postId}`);
+    const res = await axios.get(`${API}/comments/${postId}`);
     return res.data;
   }
 
   async addComment(postId, content, token) {
-    const res = await axios.post(`${API_URL}/comments/${postId}`, { content }, {
+    const res = await axios.post(`${API}/comments/${postId}`, { content }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -19,7 +19,7 @@ export class CommentService {
   }
 
   async addReply(commentId, content, token) {
-    const res = await axios.post(`${API_URL}/comments/${commentId}/reply`, { content }, {
+    const res = await axios.post(`${API}/comments/${commentId}/reply`, { content }, {
         headers: {
           Authorization: `Bearer ${token}`
         }

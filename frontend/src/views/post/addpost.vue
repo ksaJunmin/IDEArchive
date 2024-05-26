@@ -4,6 +4,8 @@ import axios from 'axios';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
 
+const API = import.meta.env.API_URL
+
 const router = useRouter();
 
 const title = ref('');
@@ -20,7 +22,7 @@ const addPost = async () => {
 
   try {
     const token = localStorage.getItem('token');
-    await axios.post('http://localhost:3000/posts/add', newPost, {
+    await axios.post(API + '/posts/add', newPost, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'

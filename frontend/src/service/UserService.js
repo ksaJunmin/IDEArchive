@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const API = import.meta.env.API_URL
+
 export class UserService {
   async fetchUser(token) {
     if (!token) {
@@ -7,7 +9,7 @@ export class UserService {
     }
 
     try {
-      const response = await axios.get('http://localhost:3000/users/info', {
+      const response = await axios.get(API + '/users/info', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -20,7 +22,7 @@ export class UserService {
   }
   async updatePoints(token, point) {
     try {
-      const res = await axios.patch('http://localhost:3000/users/points', { point }, {
+      const res = await axios.patch(API + '/users/points', { point }, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'

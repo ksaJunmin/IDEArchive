@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 const router = useRouter();
 
+const API = import.meta.env.API_URL
+
 const form = ref({
   name: '',
   schoolID: '',
@@ -63,7 +65,7 @@ const register = async () => {
   }
   try {
     router.push('/');  // 홈페이지 경로로 이동
-    const response = await axios.post('http://localhost:3000/users/signin', form.value);
+    const response = await axios.post(API + '/users/signin', form.value);
     //alert(response.data);
   } catch (error) {
     alert('사용자 등록 오류: ' + (error.response ? error.response.data : error.message));
