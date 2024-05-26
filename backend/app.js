@@ -47,7 +47,7 @@ app.use(function(err, req, res, next) {
 // 몽구스 연결
 import { connect } from 'mongoose';
 connect(
-    'mongodb+srv://ksaJunmin:ww234700@ksajunmin.hiq5vra.mongodb.net/db'
+    'mongo:31208/db'
   )
   .then(() => console.log('MongoDB connected'))
   .catch((err) => {

@@ -2,7 +2,9 @@
 import { useLayout } from '@/layout/composables/layout.js';
 import { ref, computed } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
-import axios from 'axios';
+import { UserService } from '@/service/UserService.js';
+
+const userService = new UserService();
 
 const { layoutConfig } = useLayout();
 const email = ref('');
@@ -20,7 +22,7 @@ const loginError = ref(null);
 
 const login = async () => {
   try {
-    const response = await UserService.login(email.value, password.value);
+    const response = await userService.login(email.value, password.value);
     
     // 서버로부터 토큰 등의 인증 정보를 받아 적절히 처리
     const token = response.token;
