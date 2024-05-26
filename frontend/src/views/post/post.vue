@@ -120,14 +120,16 @@ onMounted(async () => {
             <h3>댓글</h3>
             <div>
               <div v-for="comment in comments" :key="comment._id">
-                <p>
-                  <strong>{{ comment.author.name }}:</strong> {{ comment.content }}
-                </p>
-                <small>{{ new Date(comment.date).toLocaleString() }}</small>
+                <div v-if="!comment.replies">
+                  <p>
+                    <strong>{{ comment.author.name }}:</strong> {{ comment.content }}
+                  </p>
+                  <small>{{ new Date(comment.date).toLocaleString() }}</small>
 
-                <div v-for="reply in comment.replies" :key="reply._id" class="reply">
-                  <p><strong>{{ reply.author.name }}:</strong> {{ reply.content }}</p>
-                  <small>{{ new Date(reply.date).toLocaleString() }}</small>
+                  <div v-for="reply in comment.replies" :key="reply._id" class="reply">
+                    <p><strong>{{ reply.author.name }}:</strong> {{ reply.content }}</p>
+                    <small>{{ new Date(reply.date).toLocaleString() }}</small>
+                  </div>
                 </div>
 
                 <div v-if="isLoggedIn">
