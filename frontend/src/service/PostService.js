@@ -4,6 +4,7 @@ const API = import.meta.env.API_URL
 
 export class PostService {
   async getPosts() {
+    console.log(API)
     const res = await axios.get(API_URL + '/posts');
     return res.data;
   }
