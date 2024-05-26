@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const API = import.meta.env.VITE_API_URL
+const API = import.meta.env.VITE_API_URL_2
 
 export class UserService {
   async register(userData) {
     try {
-      const response = await axios.post(`${API}/users/signin`, userData);
+      const response = await axios.post(`${API}/signin`, userData);
       return response.data;
     } catch (error) {
       throw new Error(error.response ? error.response.data : error.message);
@@ -13,7 +13,7 @@ export class UserService {
   }
   async login(email, password) {
     try {
-      const response = await axios.post(`${API}/users/login`, { email, password });
+      const response = await axios.post(`${API}/login`, { email, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response ? error.response.data : error.message);
@@ -25,7 +25,7 @@ export class UserService {
     }
 
     try {
-      const response = await axios.get(API + '/users/info', {
+      const response = await axios.get(API + '/info', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -38,7 +38,7 @@ export class UserService {
   }
   async updatePoints(token, point) {
     try {
-      const res = await axios.patch(API + '/users/points', { point }, {
+      const res = await axios.patch(API + '/points', { point }, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
