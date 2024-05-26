@@ -113,6 +113,8 @@ import '@/assets/styles.scss';
 
 const app = createApp(App);
 
+app.provide('http', axios);
+
 app.use(router);
 app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
