@@ -10,7 +10,7 @@ export class PostService {
   }
 
   async getPostById(postId) {
-    const res = await axios.get(API + postId);
+    const res = await axios.get(`${API}/${postId}`);
     return res.data;
   }
 
@@ -29,7 +29,7 @@ export class PostService {
   }
 
   async updateLike(token, postId) {
-    const res = await axios.patch(API + postId + '/like', {}, {
+    const res = await axios.patch(`${API}/${postId}/like`, {}, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
