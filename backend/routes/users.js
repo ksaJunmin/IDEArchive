@@ -4,7 +4,7 @@ const router = express.Router();
 import User from '../db/user.js';
 import jwt from 'jsonwebtoken';
 import { authenticateToken } from './auth.js';
-
+import bcrypt from 'bcryptjs'
 const secretKey = 'your_secret_key';
 
 router.use(bodyParser.urlencoded({extended:false}));
@@ -38,10 +38,14 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     // 사용자 검색
-    const user = await User.findOne({ email, password });
+    const user = await User.findOne({ email});
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
+    }
+    const isMatch = bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(402).json({ error: 'Invalid email or password' });
     }
 
     // JWT 생성

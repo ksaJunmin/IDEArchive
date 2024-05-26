@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { UserService } from '@/service/UserService.js';
+import bcrypt from 'bcryptjs';
 
 const userService = new UserService();
 const router = useRouter();
@@ -63,6 +64,10 @@ const register = async () => {
 
   try {
     const userData = form.value;
+    //userData.password 솔트 필요 
+    const salt = bcrypt.genSaltSync(10);  // 솔트 생성
+    userData.password = bcrypt.hashSync(userData.password, salt);  // 비밀번호 해시
+
     const response = await userService.register(userData);
     router.push('/');  // 홈페이지 경로로 이동
     alert('사용자 등록 성공: ' + response);
