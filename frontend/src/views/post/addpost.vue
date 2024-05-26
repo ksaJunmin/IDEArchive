@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
+import { PostService } from '@/service/PostService.js';
 
-const API = import.meta.env.API_URL
-
+const postService = new PostService();
 const router = useRouter();
 
 const title = ref('');
@@ -22,12 +21,7 @@ const addPost = async () => {
 
   try {
     const token = localStorage.getItem('token');
-    await axios.post(API + '/posts/add', newPost, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    await postService.addPost(newPost, token);
     alert('Post added successfully!');
     clearForm();
     router.push('/board/1');

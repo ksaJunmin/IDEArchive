@@ -1,1 +1,0 @@
-import{a as s}from"./axios-9cbf0d09.js";const a={}.API_URL;class i{async getPosts(){return(await s.get(a+"/posts")).data}async getPostById(t){return(await s.get(a+"/posts/"+t)).data}async updateLike(t,e){return(await s.patch(a+"/posts/"+e+"/like",{},{headers:{Authorization:`Bearer ${t}`,"Content-Type":"application/json"}})).data}}export{i as P};

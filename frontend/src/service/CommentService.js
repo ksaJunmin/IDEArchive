@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = import.meta.env.API_URL
+const API = import.meta.env.VITE_API_URL
 
 export class CommentService {
   async fetchComments(postId) {

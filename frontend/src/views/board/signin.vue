@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
-const router = useRouter();
+import { UserService } from '@/service/UserService.js';
 
-const API = import.meta.env.API_URL
+const userService = new UserService();
+const router = useRouter();
 
 const form = ref({
   name: '',
@@ -56,22 +56,20 @@ const validateForm = () => {
 };
 
 
-
 const register = async () => {
-
-    //add2
   if (!validateForm()) {
     return;
   }
+
   try {
+    const userData = form.value;
+    const response = await userService.register(userData);
     router.push('/');  // 홈페이지 경로로 이동
-    const response = await axios.post(API + '/users/signin', form.value);
-    //alert(response.data);
+    alert('사용자 등록 성공: ' + response);
   } catch (error) {
-    alert('사용자 등록 오류: ' + (error.response ? error.response.data : error.message));
-    
+    alert('사용자 등록 오류: ' + error.message);
   }
-};
+  };
 </script>
 
 <template>
