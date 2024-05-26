@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { PostService } from '@/service/PostService.js';
 import { CommentService } from '@/service/CommentService.js';
+import MathRenderer from '@/views/post/MathRenderer.vue';
 
 const postService = new PostService();
 const commentService = new CommentService();
@@ -100,7 +101,13 @@ onMounted(async () => {
             </div>
           </div>
           <Divider />
-          <div class="font-medium">{{ post.content }}</div>
+          <!-- 렌더링된 LaTeX 구문을 표시할 부분 -->
+          <div v-if="post.islatex == 1"  class="font-medium">
+            <MathRenderer :content="post.content" />
+          </div>
+          <div v-else  class="font-medium">
+            {{ post.content }}
+          </div>
           <div>
             <div class="flex flex-column mt-4 align-items-center justify-center">
               <div class="flex gap-2">

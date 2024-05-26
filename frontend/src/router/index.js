@@ -39,6 +39,11 @@ const router = createRouter({
                     component: () => import('@/views/post/addpost.vue')
                 },
                 {
+                    path: '/latexpost',
+                    name: 'latexpost',
+                    component: () => import('@/views/post/latexPost.vue')
+                },
+                {
                     path: '/post/:postId',
                     name: 'post',
                     component: () => import('@/views/post/post.vue')

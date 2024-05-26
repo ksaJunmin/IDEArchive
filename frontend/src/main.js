@@ -109,6 +109,8 @@ import VirtualScroller from 'primevue/virtualscroller';
 
 import BlockViewer from '@/components/BlockViewer.vue';
 
+import 'katex/dist/katex.min.css';
+
 import '@/assets/styles.scss';
 
 const app = createApp(App);

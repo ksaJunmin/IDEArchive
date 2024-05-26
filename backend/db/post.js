@@ -26,6 +26,10 @@ const PostSchema = new Schema({
   },
   author: {
     type: Schema.Types.ObjectId, ref: 'User'
+  },
+  islatex:{
+    type: Number,
+    default: 0
   }
 });
 

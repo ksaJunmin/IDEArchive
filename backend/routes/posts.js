@@ -5,9 +5,9 @@ import { authenticateToken } from './auth.js';
 
 // Create a new post
 router.post('/add', authenticateToken, async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, content, category, islatex } = req.body;
   const author = await req.user.userId;
-  const newPost = new Post({ title, content, category, author })
+  const newPost = new Post({ title, content, category, author, islatex })
   
   try {
     const savedPost = await newPost.save();

@@ -71,6 +71,9 @@ const goToPost = (id) => {
 const goToAddPost = () => {
   router.push('/addpost');
 };
+const goToLatexPost = () => {
+  router.push('/latexpost');
+};
 </script>
 
 <template>
@@ -83,6 +86,7 @@ const goToAddPost = () => {
           <template v-slot:start>
             <div class="my-2">
               <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToAddPost" />
+              <Button label="수식 쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToLatexPost" />
             </div>
           </template>
         </Toolbar>
