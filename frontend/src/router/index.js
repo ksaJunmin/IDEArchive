@@ -29,6 +29,16 @@ const router = createRouter({
                     component: () => import('@/views/board/2.vue')
                 },
                 {
+                    path: '/board/3',
+                    name: 'request',
+                    component: () => import('@/views/board/3.vue')
+                },
+                {
+                    path: '/requestForm',
+                    name: 'requestForm',
+                    component: () => import('@/views/board/requestForm.vue')
+                },
+                {
                     path: '/board/mypage',
                     name: 'mypage',
                     component: () => import('@/views/board/mypage.vue')
