@@ -2,8 +2,8 @@
 
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { PostService } from '@/service/PostService';
-import { CommentService } from '@/service/CommentService';
+import { PostService } from '@/service/PostService.js';
+import { CommentService } from '@/service/CommentService.js';
 
 const postService = new PostService();
 const commentService = new CommentService();

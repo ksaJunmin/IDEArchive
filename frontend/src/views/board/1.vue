@@ -3,7 +3,7 @@
 import { ref, onMounted } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
-import { PostService } from '@/service/PostService';
+import { PostService } from '@/service/PostService.js';
 
 const router = useRouter();
 const dataviewValue = ref(null);

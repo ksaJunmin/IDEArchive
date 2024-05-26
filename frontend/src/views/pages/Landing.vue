@@ -1,5 +1,5 @@
 <script setup>
-import { useLayout } from '@/layout/composables/layout';
+import { useLayout } from '@/layout/composables/layout.js';
 import { computed } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 

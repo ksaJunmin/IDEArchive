@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { PostService } from '@/service/PostService';
-import { UserService } from '@/service/UserService';
+import { PostService } from '@/service/PostService.js';
+import { UserService } from '@/service/UserService.js';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
