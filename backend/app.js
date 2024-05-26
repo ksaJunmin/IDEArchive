@@ -47,7 +47,7 @@ app.use(function(err, req, res, next) {
 // 몽구스 연결
 import { connect } from 'mongoose';
 connect(
-    'mongo:31208/db'
+    'mongodb://svc.sel5.cloudtype.app:31208/db'
   )
   .then(() => console.log('MongoDB connected'))
   .catch((err) => {
