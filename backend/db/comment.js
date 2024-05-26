@@ -5,7 +5,8 @@ const commentSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   post: { type: Schema.Types.ObjectId, ref: 'Post', required: true },
   date: { type: Date, default: Date.now },
-  replies: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
+  replies: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+  isReply: {type: Boolean, default: false}
 });
 
 const Comment = model('Comment', commentSchema);
