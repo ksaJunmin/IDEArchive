@@ -35,8 +35,7 @@ router.post('/:commentId/reply', authenticateToken, async (req, res) => {
     if (!parentComment) {
       return res.status(404).json({ message: 'Comment not found' });
     }
-
-    const newReply = new Comment({ content, author, post: parentComment.post });
+    const newReply = new Comment({ content, author, post: parentComment.post, isReply: true });
     const savedReply = await newReply.save();
 
     parentComment.replies.push(savedReply._id);

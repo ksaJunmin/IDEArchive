@@ -127,7 +127,7 @@ onMounted(async () => {
             <h3>댓글</h3>
             <div>
               <div v-for="comment in comments" :key="comment._id">
-                <div v-if="!comment.replies">
+                <div v-if="!comment.isReply">
                   <p>
                     <strong>{{ comment.author.name }}:</strong> {{ comment.content }}
                   </p>
@@ -137,11 +137,11 @@ onMounted(async () => {
                     <p><strong>{{ reply.author.name }}:</strong> {{ reply.content }}</p>
                     <small>{{ new Date(reply.date).toLocaleString() }}</small>
                   </div>
-                </div>
-
-                <div v-if="isLoggedIn">
-                  <textarea v-model="replyContent[comment._id]" placeholder="답글을 입력하세요"></textarea>
-                  <button @click="addReply(comment._id)">답글 추가</button>
+                  
+                  <div v-if="isLoggedIn">
+                    <textarea v-model="replyContent[comment._id]" placeholder="답글을 입력하세요"></textarea>
+                    <button @click="addReply(comment._id)">답글 추가</button>
+                  </div>
                 </div>
               </div>
             </div>
