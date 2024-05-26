@@ -18,7 +18,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(path.resolve(), '/public')));
+
+app.use(express.static(path.join(path.resolve(), '/public'), {
+  setHeaders: (res, path, stat) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
 
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
