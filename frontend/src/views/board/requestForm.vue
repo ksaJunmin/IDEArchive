@@ -7,11 +7,12 @@
     </div>
     <div class="p-field p-grid">
       <label for="content">내용</label>
-      <Textarea v-model="newRequest.content" id="body" required rows="12" cols="120" class="full" />
+      <Textarea v-model="newRequest.content" id="content" required rows="12" cols="120" class="full" />
     </div>
     <div class="p-field p-grid">
       <label for="points">포인트</label>
-      <InputText id="points" v-model="newRequest.points" />
+      <InputText type="number" id="points" min="1" :max="user?.points" v-model.number="newRequest.points" />
+      <p v-if="errorMessage">{{ errorMessage }}</p>
     </div>
     <div class="button-group">
           <Button label="취소" icon="pi pi-times" text @click="resetForm" />
@@ -21,13 +22,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { RequestService } from '@/service/RequestService.js';
+import { UserService } from '@/service/UserService.js';
 import { useRouter } from 'vue-router';
+
+const user = ref(null);
 
 const router = useRouter();
 const token = localStorage.getItem('token');
 const requestService = new RequestService();
+const userService = new UserService();
 
 const newRequest = ref({
   title: '',
@@ -37,10 +42,15 @@ const newRequest = ref({
 
 const postRequest = async () => {
   try {
+    if (newRequest.value.points > user.value.points) {
+    errorMessage.value = `포인트는 최대 ${user.value.points}까지 입력할 수 있습니다.`;
+  } else {
+    errorMessage.value = '';
     await requestService.postRequest(newRequest.value, token);
     // 성공적으로 게시된 의뢰 처리
     resetForm();
     router.push('/board/3');
+  }
   } catch (error) {
     console.error('Error creating request: ', error.message);
   }
@@ -48,9 +58,27 @@ const postRequest = async () => {
 
 const resetForm = () => {
   newRequest.value.title = '';
-  newRequest.value.description = '';
+  newRequest.value.content = '';
   newRequest.value.points = '';
 };
+
+const getProfile = async () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    try {
+      const userData = await userService.fetchUser(token);
+      user.value = userData;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    }
+  } else {
+    console.error('No token found');
+  }
+};
+const errorMessage = ref('');
+
+
+onMounted(getProfile);
 </script>
 
 <style scoped>

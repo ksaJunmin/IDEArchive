@@ -96,9 +96,9 @@ onMounted(async () => {
                   <i class="pi pi-thumbs-up"></i>
                 </div>
               </div>
-              <div v-if="post.author">{{ post.author.schoolID }} {{ post.author.name }}</div>
-              <div v-else> 옛날 글 </div>
+              
             </div>
+            <div>{{ post.author.schoolID }} {{ post.author.name }}</div>
           </div>
           <Divider />
           <!-- 렌더링된 LaTeX 구문을 표시할 부분 -->

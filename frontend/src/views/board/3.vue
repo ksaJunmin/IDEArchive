@@ -9,7 +9,7 @@ const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
 const sortOrder = ref(-1);
-const sortField = ref('date');
+const sortField = ref('_id');
 const sortOptions = ref([
   { label: '최신순', value: '!date' },
   { label: '오래된 순', value: 'date' },

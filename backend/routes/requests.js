@@ -2,6 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import Request from '../db/request.js';
 import Answer from '../db/answer.js';
+import User from '../db/user.js';
 import { authenticateToken } from './auth.js';
 
 // 의뢰 목록 가져오기
@@ -85,8 +86,23 @@ router.patch('/:requestId/choose-answer/:answerId', async (req, res) => {
         if (!answer) {
             return res.status(404).json({ message: '답변을 찾을 수 없습니다.' });
         }
-        request.chosenAnswer.push(req.params.answerId);
+        request.chosenAnswer = req.params.answerId;
         await request.save();
+        const user1 = await User.findById(request.author);
+        const user2 = await User.findById(answer.author);
+        const pointsToTransfer = request.points;
+
+        // 요청자의 포인트를 줄입니다.
+        user1.points -= pointsToTransfer;
+
+        // 답변자의 포인트를 늘립니다.
+        user2.points += pointsToTransfer;
+
+        // 데이터베이스에 변경사항을 저장합니다.
+        await Promise.all([user1.save(), user2.save()]);
+
+        await request.save();
+
         res.json(answer);
     } catch (err) {
         res.status(500).json({ message: err.message });

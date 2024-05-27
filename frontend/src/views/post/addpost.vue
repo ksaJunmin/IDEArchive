@@ -10,18 +10,33 @@ const router = useRouter();
 const title = ref('');
 const content = ref('');
 const selectedCategory = ref('');
+const file = ref(null); // 파일 업로드 상태
 const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
+
+const onFileChange = (event) => {
+  file.value = event.target.files[0];
+};
 
 const addPost = async () => {
   const newPost = {
     title: title.value,
     content: content.value,
-    category: selectedCategory.value
+    category: selectedCategory.value,
   };
 
   try {
     const token = localStorage.getItem('token');
-    await postService.addPost(newPost, token);
+    
+    // Create form data for the post and file
+    const formData = new FormData();
+    formData.append('title', newPost.title);
+    formData.append('content', newPost.content);
+    formData.append('category', newPost.category);
+    if (file.value) {
+      formData.append('file', file.value);
+    }
+
+    await postService.addPost(formData, token);
     alert('Post added successfully!');
     clearForm();
     router.push('/board/1');
@@ -35,6 +50,7 @@ const clearForm = () => {
   title.value = '';
   content.value = '';
   selectedCategory.value = '';
+  file.value = null;
 };
 </script>
 
@@ -42,7 +58,7 @@ const clearForm = () => {
   <div class="grid justify-content-center">
     <div class="col-12 md:col-10">
       <div>
-        <h2 ><strong>새 글 작성</strong></h2>
+        <h2><strong>새 글 작성</strong></h2>
         <form @submit.prevent="addPost">
           <div class="field">
             <label for="title">제목</label>
@@ -62,7 +78,6 @@ const clearForm = () => {
               </div>
             </div>
           </div>
-
           <div class="button-group">
             <Button label="취소" icon="pi pi-times" text @click="clearForm" />
             <Button label="저장" icon="pi pi-check" text type="submit" />

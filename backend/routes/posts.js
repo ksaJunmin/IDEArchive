@@ -2,13 +2,28 @@ import { Router } from 'express';
 const router = Router();
 import Post from '../db/post.js';
 import { authenticateToken } from './auth.js';
+import cors from 'cors';
+import multer from 'multer';
+import fs from 'fs';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Create a new post
-router.post('/add', authenticateToken, async (req, res) => {
+router.post('/add', authenticateToken, upload.single('file'), async (req, res) => {
   const { title, content, category, islatex } = req.body;
-  const author = await req.user.userId;
-  const newPost = new Post({ title, content, category, author, islatex })
-  
+  const { filename, originalname } = req.file;
+  const author = req.user.userId;
+  const newPost = new Post({ title, content, category, author, islatex, filename, originalname });
+
   try {
     const savedPost = await newPost.save();
     res.json(savedPost);
@@ -29,6 +44,11 @@ router.get('/', async (req, res) => {
 router.get('/:postId', async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId).populate('author');
+    const filePath = path.join(__dirname, '../uploads', post.filename);
+    const readStream = fs.createReadStream(filePath);
+
+    // 파일을 스트리밍하여 응답
+    readStream.pipe(res);
     if (!post) return res.status(404).json('Post not found');
     res.json(post);
   } catch (err) {
