@@ -13,9 +13,8 @@ const model = ref([
   {
     label: '게시판',
     items: [
-      { label: '해줘요', icon: 'pi pi-fw pi-list', to: '/board/1' },
-      { label: '도와줘요', icon: 'pi pi-fw pi-list', to: '/board/2' },
-      { label: 'asdf', icon: 'pi pi-fw pi-list', to: '/board/3' }
+      { label: '해줘요', icon: 'pi pi-fw pi-list', to: '/board/3' },
+      { label: '도와줘요', icon: 'pi pi-fw pi-list', to: '/board/2' }
     ]
   },
   {
