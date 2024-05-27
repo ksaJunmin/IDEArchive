@@ -85,7 +85,7 @@ router.patch('/:requestId/choose-answer/:answerId', async (req, res) => {
         if (!answer) {
             return res.status(404).json({ message: '답변을 찾을 수 없습니다.' });
         }
-        request.chosenAnswer = req.params.answerId;
+        request.chosenAnswer.push(req.params.answerId);
         await request.save();
         res.json(answer);
     } catch (err) {

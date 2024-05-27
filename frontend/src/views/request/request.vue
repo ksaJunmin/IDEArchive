@@ -54,7 +54,6 @@ const addAnswer = (id) => {
 
 const chooseAnswer = async (id) => {
   await requestService.chooseAnswer(requestId.value, id);
-  fetchAnswers();
 }
 
 onMounted(async () => {
@@ -137,9 +136,9 @@ onMounted(async () => {
             <div v-if="isLoggedIn && !request.chosenAnswer">
               <Button @click="addAnswer(requestId)">답변 추가하기</Button>
             </div>
-            <div v-else>
+            <!--<div v-else>
               <p>로그인 후 답변을 작성할 수 있습니다.</p>
-            </div>
+            </div>-->
           </div>
           
           
