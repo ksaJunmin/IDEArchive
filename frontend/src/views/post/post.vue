@@ -116,14 +116,7 @@ onMounted(async () => {
             </div>
           </div>
           <Divider />
-          <div class="text-gray-500">댓글 0</div>
-          <div class="flex gap-2">
-            <Textarea placeholder="댓글을 입력하세요" :autoResize="true" rows="1" cols="50" />
-            <Button label="입력" class="mr-10 mb-10"></Button>
-          </div>
-
           <div>
-            <h3>.</h3>
             <h3>댓글</h3>
             <div>
               <div v-for="comment in comments" :key="comment._id">
@@ -139,16 +132,16 @@ onMounted(async () => {
                   </div>
                   
                   <div v-if="isLoggedIn">
-                    <textarea v-model="replyContent[comment._id]" placeholder="답글을 입력하세요"></textarea>
-                    <button @click="addReply(comment._id)">답글 추가</button>
+                    <Textarea v-model="replyContent[comment._id]" placeholder="답글을 입력하세요"></Textarea>
+                    <Button @click="addReply(comment._id)">답글 추가</Button>
                   </div>
                 </div>
               </div>
             </div>
 
             <div v-if="isLoggedIn">
-              <textarea v-model="newComment" placeholder="댓글을 입력하세요"></textarea>
-              <button @click="addComment">댓글 추가</button>
+              <Textarea v-model="newComment" placeholder="댓글을 입력하세요"></Textarea>
+              <Button @click="addComment">댓글 추가</Button>
             </div>
             <div v-else>
               <p>로그인 후 댓글을 작성할 수 있습니다.</p>
