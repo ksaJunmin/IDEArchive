@@ -64,8 +64,8 @@ const onSortSubject = (event) => {
   });
 };
 
-const goToRequest = (id) => {
-  router.push('/request/' + id);
+const goToRequest = (requestId) => {
+  router.push('/request/' + requestId);
 };
 
 const goToAddRequest = () => {

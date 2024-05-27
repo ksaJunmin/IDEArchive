@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RequestService } from '@/service/RequestService.js';
 import MathRenderer from '@/views/post/MathRenderer.vue';
@@ -26,6 +26,7 @@ const token = localStorage.getItem('token');
 const answers = ref([]);
 const isLoggedIn = ref(false);
 
+const user = ref(null);
 
 const fetchAnswers = async () => {
   try {
@@ -47,9 +48,14 @@ const addComment = async () => {
   }
 };
 
-const addAnswer = (requestId) => {
-  router.push(`/request/${requestId.value}/answer`);
+const addAnswer = (id) => {
+  router.push(`/request/${id}/answer`);
 };
+
+const chooseAnswer = async (id) => {
+  await requestService.chooseAnswer(requestId.value, id);
+  fetchAnswers();
+}
 
 onMounted(async () => {
   try {
@@ -94,7 +100,7 @@ onMounted(async () => {
           <div v-if="request.islatex == 1"  class="font-medium">
             <MathRenderer :content="request.content" />
           </div>
-          <div v-else  class="font-medium">
+          <div v-else class="font-medium text-xl">
             {{ request.content }}
           </div>
           <div>
@@ -107,23 +113,35 @@ onMounted(async () => {
           <Divider />
           <div>
             <h3>답변</h3>
-            <div>
-              <div v-for="answer in answers" :key="answer._id">
-                <p>
-                  <strong>{{ answer.author.name }}:</strong> {{ answer.content }}
-                </p>
-                <small>{{ new Date(answer.date).toLocaleString() }}</small>
+            <div class="grid">
+              <div class="col-12">
+                <div v-for="answer in answers" :key="answer._id">
+                    
+                  <div class="card">
+                    <div v-if="request.chosenAnswer == answer._id">
+                      채택되었습니다!
+                    </div>
+                    <p>
+                      <strong>{{ answer.author.name }}:</strong> {{ answer.content }}
+                    </p>
+                    <div v-if="!request.chosenAnswer">
+                      <Button @click="chooseAnswer(answer._id)"> 채택하기 </Button>
+                    </div>
+                  </div>
+                    <!--<small>{{ new Date(answer.date).toLocaleString() }}</small>-->
+                  
+                </div>
               </div>
             </div>
 
-            <div v-if="isLoggedIn">
-              <Button @click="addAnswer">답변 추가하기</Button>
+            <div v-if="isLoggedIn && !request.chosenAnswer">
+              <Button @click="addAnswer(requestId)">답변 추가하기</Button>
             </div>
             <div v-else>
               <p>로그인 후 답변을 작성할 수 있습니다.</p>
             </div>
           </div>
-
+          
           
         </div>
       </div>

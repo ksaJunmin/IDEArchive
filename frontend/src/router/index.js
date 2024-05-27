@@ -59,6 +59,11 @@ const router = createRouter({
                     component: () => import('@/views/post/post.vue')
                 },
                 {
+                    path: '/request/:requestId/answer',
+                    name: 'answer',
+                    component: () => import('@/views/request/answer.vue')
+                },
+                {
                     path: '/request/:requestId',
                     name: 'requestId',
                     component: () => import('@/views/request/request.vue')

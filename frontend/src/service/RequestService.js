@@ -43,7 +43,7 @@ export class RequestService {
     return response.data;
   }
   // 답변 추가
-  async postAnswer(requestId, answerData, token) {
+  async addAnswer(requestId, answerData, token) {
     try {
       const response = await axios.post(API + `/${requestId}/answers`, answerData, {
         headers: {
@@ -58,14 +58,9 @@ export class RequestService {
   }
 
   // 채택된 답변 업데이트
-  async chooseAnswer(requestId, answerId, token) {
+  async chooseAnswer(requestId, answerId) {
     try {
-      const response = await axios.patch(`/${requestId}/choose-answer/${answerId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axios.patch(`${API}/${requestId}/choose-answer/${answerId}`);
       return response.data;
     } catch (error) {
       throw Error(`API Error: ${error.response.statusText}`);

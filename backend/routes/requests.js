@@ -48,8 +48,7 @@ router.get('/:requestId/answers', async (req, res) => {
     const requestId = req.params.requestId;
 
   try {
-    const answers = await Answer.find({ request: requestId })
-      .populate('author');
+    const answers = await Answer.find({ request: requestId }).populate('author');
     res.json(answers);
   } catch (err) {
     res.status(400).json({ message: 'Error: ' + err.message });
@@ -61,13 +60,11 @@ router.post('/:requestId/answers', authenticateToken, async (req, res) => {
     const answer = new Answer({
         content: req.body.content,
         author: req.user.userId,
+        request: req.params.requestId
     });
 
     try {
         const newAnswer = await answer.save();
-        const request = await findById(req.params.requestId);
-        request.answers.push(newAnswer);
-        await request.save();
         res.status(201).json(newAnswer);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -77,18 +74,24 @@ router.post('/:requestId/answers', authenticateToken, async (req, res) => {
 // 채택된 답변 업데이트
 router.patch('/:requestId/choose-answer/:answerId', async (req, res) => {
     try {
-        const request = await findById(req.params.requestId);
+        const request = await Request.findById(req.params.requestId);
+        if (!request) {
+            return res.status(404).json({ message: '요청을 찾을 수 없습니다.' });
+        }
         if (request.chosenAnswer) {
             return res.status(400).json({ message: '이미 채택된 답변이 있습니다.' });
         }
         const answer = await Answer.findById(req.params.answerId);
-        await answer.save();
-        request.chosenAnswer = answer;
+        if (!answer) {
+            return res.status(404).json({ message: '답변을 찾을 수 없습니다.' });
+        }
+        request.chosenAnswer = req.params.answerId;
         await request.save();
         res.json(answer);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 });
+
 
 export default router;
