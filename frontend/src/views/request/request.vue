@@ -1,36 +1,35 @@
 <script setup>
 
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { RequestService } from '@/service/RequestService.js';
 import MathRenderer from '@/views/post/MathRenderer.vue';
 
 const requestService = new RequestService();
 const route = useRoute();
+const router = useRouter();
 
-const postId = ref(route.params.postId);
-const post = ref(null);
+const requestId = ref(route.params.requestId);
+const request = ref(null);
 
 const token = localStorage.getItem('token');
 
-const handleLike = async () => {
+/*const handleLike = async () => {
   try {
     const updatedPost = await postService.updateLike(token, postId.value);
     post.value = updatedPost;
   } catch (error) {
     console.error('Error updating like:', error);
   }
-};
+};*/
 
-const comments = ref([]);
-const newComment = ref('');
-const replyContent = ref({});
+const answers = ref([]);
 const isLoggedIn = ref(false);
 
 
-const fetchComments = async () => {
+const fetchAnswers = async () => {
   try {
-    comments.value = await commentService.fetchComments(postId.value);
+    answers.value = await requestService.fetchAnswers(requestId.value);
   } catch (error) {
     console.error('Error fetching comments:', error);
   }
@@ -48,28 +47,20 @@ const addComment = async () => {
   }
 };
 
-const addReply = async (commentId) => {
-  if (!replyContent.value[commentId]) return;
-
-  try {
-    await commentService.addReply(commentId, replyContent.value[commentId], token);
-    replyContent.value[commentId] = '';
-    await fetchComments();
-  } catch (error) {
-    console.error('Error adding reply:', error);
-  }
+const addAnswer = (requestId) => {
+  router.push(`/request/${requestId.value}/answer`);
 };
 
 onMounted(async () => {
   try {
-    const data = await postService.getPostById(postId.value);
-    post.value = data;
+    const data = await requestService.getRequestById(requestId.value);
+    request.value = data;
   } catch (error) {
     console.error('Error fetching post:', error);
   }
 
   try {
-    await fetchComments();
+    await fetchAnswers();
     isLoggedIn.value = !!token;
   } catch (error) {
     console.error('Error fetching comments:', error);
@@ -80,31 +71,31 @@ onMounted(async () => {
 
 
 <template>
-    <div class="grid">
+  <div class="grid">
     <div class="col-12">
       <div class="card">
-        <div v-if="post">
-          <h2>{{ post.title }}</h2>
+        <div v-if="request">
+          <h2>{{ request.title }}</h2>
           <div>
             <div class="flex flex-row gap-2 mt-4 align-items-center">
-              <div class="text-gray-500">{{ new Date(post.date).toLocaleString() }}</div>
+              <!--<div class="text-gray-500">{{ new Date(request.date).toLocaleString() }}</div>
               <div class="surface-100 p-1" style="border-radius: 30px">
                 <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                  <div class="text-900 font-medium text-sm">{{ post.like }}</div>
+                  <div class="text-900 font-medium text-sm">{{ request.like }}</div>
                   <i class="pi pi-thumbs-up"></i>
                 </div>
-              </div>
-              <div v-if="post.author">{{ post.author.schoolID }} {{ post.author.name }}</div>
+              </div>-->
+              <div v-if="request.author">{{ request.author.schoolID }} {{ request.author.name }}</div>
               <div v-else> 옛날 글 </div>
             </div>
           </div>
           <Divider />
           <!-- 렌더링된 LaTeX 구문을 표시할 부분 -->
-          <div v-if="post.islatex == 1"  class="font-medium">
-            <MathRenderer :content="post.content" />
+          <div v-if="request.islatex == 1"  class="font-medium">
+            <MathRenderer :content="request.content" />
           </div>
           <div v-else  class="font-medium">
-            {{ post.content }}
+            {{ request.content }}
           </div>
           <div>
             <div class="flex flex-column mt-4 align-items-center justify-center">
@@ -115,27 +106,18 @@ onMounted(async () => {
           </div>
           <Divider />
           <div>
-            <h3>답글</h3>
+            <h3>답변</h3>
             <div>
-              <div v-for="comment in comments" :key="comment._id">
-                <div v-if="!comment.isReply">
-                  <p>
-                    <strong>{{ comment.author.name }}:</strong> {{ comment.content }}
-                  </p>
-                  <small>{{ new Date(comment.date).toLocaleString() }}</small>
-
-                  <div v-for="reply in comment.replies" :key="reply._id" class="reply">
-                    <p><strong>{{ reply.author.name }}:</strong> {{ reply.content }}</p>
-                    <small>{{ new Date(reply.date).toLocaleString() }}</small>
-                  </div>
-                  
-                </div>
+              <div v-for="answer in answers" :key="answer._id">
+                <p>
+                  <strong>{{ answer.author.name }}:</strong> {{ answer.content }}
+                </p>
+                <small>{{ new Date(answer.date).toLocaleString() }}</small>
               </div>
             </div>
 
             <div v-if="isLoggedIn">
-              <textarea v-model="newComment" placeholder="댓글을 입력하세요"></textarea>
-              <button @click="addComment">댓글 추가</button>
+              <Button @click="addAnswer">답변 추가하기</Button>
             </div>
             <div v-else>
               <p>로그인 후 답변을 작성할 수 있습니다.</p>

@@ -13,6 +13,16 @@ export class RequestService {
     }
   }
 
+  // 특정 의뢰 게시물 가져오기
+  async getRequestById(requestId) {
+    try {
+      const response = await axios.get(`${API}/${requestId}`);
+      return response.data;
+    } catch (error) {
+      throw Error(`API Error: ${error.response.statusText}`);
+    }
+  }
+
   // 의뢰 게시물 작성
   async postRequest(requestData, token) {
     try {
@@ -28,6 +38,10 @@ export class RequestService {
     }
   }
 
+  async fetchAnswers(requestId) {
+    const response = await axios.get(`${API}/${requestId}/answers`);
+    return response.data;
+  }
   // 답변 추가
   async postAnswer(requestId, answerData, token) {
     try {

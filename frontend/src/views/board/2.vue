@@ -77,7 +77,7 @@ const goToLatexPost = () => {
 </script>
 
 <template>
-  <h3>해줘요 게시판</h3>
+  <h3>도와줘요 게시판</h3>
 
   <div class="grid">
     <div class="col-12">

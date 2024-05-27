@@ -64,16 +64,17 @@ const onSortSubject = (event) => {
   });
 };
 
-const goToPost = (id) => {
-  router.push('/post/' + id);
+const goToRequest = (id) => {
+  router.push('/request/' + id);
 };
 
 const goToAddRequest = () => {
   router.push('/requestForm');
 };
+/*
 const goToLatexPost = () => {
   router.push('/latexpost');
-};
+};*/
 </script>
 
 <template>
@@ -86,7 +87,7 @@ const goToLatexPost = () => {
           <template v-slot:start>
             <div class="my-2">
               <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToAddRequest" />
-              <Button label="수식 쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToLatexPost" />
+              <!--<Button label="수식 쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToLatexPost" />-->
             </div>
           </template>
         </Toolbar>
@@ -105,7 +106,7 @@ const goToLatexPost = () => {
           <template #list="slotProps">
             <div class="grid grid-nogutter">
               <div v-for="(item, index) in slotProps.items" :key="item._id" class="col-12">
-                <div class="flex flex-column p-4 gap-3 cursor-pointer" :class="{ 'border-top-1 surface-border': index !== 0 }" @click="goToPost(item._id)">
+                <div class="flex flex-column p-4 gap-3 cursor-pointer" :class="{ 'border-top-1 surface-border': index !== 0 }" @click="goToRequest(item._id)">
                   <div class="flex flex-column justify-content-between flex-1">
                     <div class="flex flex-row justify-content-between align-items-start gap-2">
                       <div class="min-w-0">

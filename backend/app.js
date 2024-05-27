@@ -6,6 +6,7 @@ import logger from 'morgan';
 import usersRouter from './routes/users.js';
 import postsRouter from './routes/posts.js';
 import commentsRouter from './routes/comments.js';
+import requestsRouter from './routes/requests.js';
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use(express.static(path.join(path.resolve(), '/public')));
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+app.use('/requests', requestsRouter);
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(path.resolve(), 'public', 'index.html'));
 });

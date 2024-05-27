@@ -14,11 +14,23 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+//특정 의뢰 가져오기
+router.get('/:requestId', async (req, res) => {
+    try {
+      const request = await Request.findById(req.params.requestId).populate('author');
+      if (!request) return res.status(404).json('Request not found');
+      res.json(request);
+    } catch (err) {
+      res.status(400).json('Error: ' + err);
+    }
+  });
+
 // 의뢰 게시물 작성
 router.post('/', authenticateToken, async (req, res) => {
     const request = new Request({
         title: req.body.title,
-        description: req.body.description,
+        content: req.body.content,
         author: req.user.userId,
         points: req.body.points
     });
@@ -30,6 +42,19 @@ router.post('/', authenticateToken, async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
+
+//답변 가져오기
+router.get('/:requestId/answers', async (req, res) => {
+    const requestId = req.params.requestId;
+
+  try {
+    const answers = await Answer.find({ request: requestId })
+      .populate('author');
+    res.json(answers);
+  } catch (err) {
+    res.status(400).json({ message: 'Error: ' + err.message });
+  }
+})
 
 // 답변 추가
 router.post('/:requestId/answers', authenticateToken, async (req, res) => {
