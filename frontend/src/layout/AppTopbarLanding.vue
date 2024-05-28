@@ -31,7 +31,7 @@ const onSignInClick = () => {
 };
 const onLoginClick = () => {
     topbarMenuActive.value = false;
-    router.push('/loginpage');
+    router.push('/login');
 };
 const onSettingsClick = () => {
     topbarMenuActive.value = false;

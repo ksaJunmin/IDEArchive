@@ -8,7 +8,7 @@
       <h1 class="hero-title">Welcome to IDEARCHIVE</h1>
       <div class="hero-content">
         <p>Your gateway to innovation and creativity.</p>
-        <router-link to="/" class="button">GO</router-link>
+        <router-link to="/login" class="button">Login</router-link>
       </div>
     </section>
     <section class="content">
@@ -25,7 +25,7 @@
         <h3>멘토링 아카이브 게시판</h3>
         <p>멘토링 아카이브 글들에 대해서 이야기해보세요</p>
       </div>
-      <router-link to="/signin" class="button">Join Us</router-link>
+      <router-link to="/signin" class="button">Sign in</router-link>
     </section>
   </div>
 </template>

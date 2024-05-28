@@ -44,11 +44,11 @@ router.get('/', async (req, res) => {
 router.get('/:postId', async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId).populate('author');
-    const filePath = path.join(__dirname, '../uploads', post.filename);
+    /*const filePath = path.join(__dirname, '../uploads', post.filename);
     const readStream = fs.createReadStream(filePath);
 
     // 파일을 스트리밍하여 응답
-    readStream.pipe(res);
+    readStream.pipe(res);*/
     if (!post) return res.status(404).json('Post not found');
     res.json(post);
   } catch (err) {

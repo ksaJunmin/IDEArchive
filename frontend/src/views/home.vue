@@ -16,22 +16,25 @@ const sortField2 = ref(null);
 const postService = new PostService();
 const userService = new UserService();
 
+
+
 const user = ref(null);
 
-onMounted(() => {
-  postService.getPosts().then((data) => {
-    const sortedDataRcmest = data.sort((a, b) => b.like - a.like);
+postService.getPosts().then((data) => {
+    // 데이터를 복사하여 정렬
+    const sortedDataRcmest = [...data].sort((a, b) => b.like - a.like);
     dataviewValue.value = sortedDataRcmest.slice(0, 3);
-    const sortedDataLatest = data.sort((a, b) => b.date - a.date);
+
+    const sortedDataLatest = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
     dataviewValue2.value = sortedDataLatest.slice(0, 3);
-  });
-  /*Promise.all([postService.getpostsSmall1(), postService.getpostsSmall2()]).then(([data1, data2]) => {
-        const data = [...data1, ...data2]
+    /*Promise.all([postService.getpostsSmall1(), postService.getpostsSmall2()]).then(([data1, data2]) => {
+      const data = [...data1, ...data2]
     });*/
 });
 
+
 const goToPost = (id) => {
-  router.push('/post/' + id);
+  router.push('/howto/' + id);
 };
 
 const handlePoints = (value) => {
@@ -48,10 +51,23 @@ const handlePoints = (value) => {
       console.error('Error updating points:', error);
     });
 };
+
+onMounted(async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    router.push('/landing');
+    console.log('landing');
+  }
+  else {
+    console.log('not landing');
+    console.log(token);
+  };
+});
+
 </script>
 
 <template>
-  <Button @click="handlePoints(100)"> submit </Button>
+  <!--<Button @click="handlePoints(100)"> submit </Button>-->
 
   <h3><strong>IDEArchive</strong>에 오신 걸 환영합니다!</h3>
 
