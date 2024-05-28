@@ -56,11 +56,6 @@ onMounted(async () => {
   const token = localStorage.getItem('token');
   if (!token) {
     router.push('/landing');
-    console.log('landing');
-  }
-  else {
-    console.log('not landing');
-    console.log(token);
   };
 });
 
