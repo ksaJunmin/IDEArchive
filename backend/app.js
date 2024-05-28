@@ -2,11 +2,11 @@ import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
 import usersRouter from './routes/users.js';
 import postsRouter from './routes/posts.js';
 import commentsRouter from './routes/comments.js';
 import requestsRouter from './routes/requests.js';
+import fileUpload from 'express-fileupload';
 
 const app = express();
 
@@ -15,7 +15,6 @@ const app = express();
 app.set("views", path.join(path.resolve() + "/views"));
 app.set("view engine", "jade");
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

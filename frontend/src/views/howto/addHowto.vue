@@ -10,31 +10,14 @@ const router = useRouter();
 const title = ref('');
 const content = ref('');
 const selectedCategory = ref('');
-const file = ref(null); // 파일 업로드 상태
 const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
 
-const onFileChange = (event) => {
-  file.value = event.target.files[0];
-};
 
 const addPost = async () => {
-  const newPost = {
-    title: title.value,
-    content: content.value,
-    category: selectedCategory.value,
-  };
+  
 
   try {
     const token = localStorage.getItem('token');
-    
-    // Create form data for the post and file
-    const formData = new FormData();
-    formData.append('title', newPost.title);
-    formData.append('content', newPost.content);
-    formData.append('category', newPost.category);
-    if (file.value) {
-      formData.append('file', file.value);
-    }
 
     await postService.addPost(formData, token);
     alert('Post added successfully!');
@@ -50,7 +33,6 @@ const clearForm = () => {
   title.value = '';
   content.value = '';
   selectedCategory.value = '';
-  file.value = null;
 };
 </script>
 
