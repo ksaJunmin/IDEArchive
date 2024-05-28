@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
 import { PostService } from '@/service/PostService.js';
-import MathRenderer from '@/views/post/MathRenderer.vue';
 
 const postService = new PostService();
 const router = useRouter();
@@ -11,22 +10,36 @@ const router = useRouter();
 const title = ref('');
 const content = ref('');
 const selectedCategory = ref('');
+const file = ref(null); // 파일 업로드 상태
 const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
+
+const onFileChange = (event) => {
+  file.value = event.target.files[0];
+};
 
 const addPost = async () => {
   const newPost = {
     title: title.value,
     content: content.value,
     category: selectedCategory.value,
-    islatex : 1
   };
 
   try {
     const token = localStorage.getItem('token');
-    await postService.addPost(newPost, token);
+    
+    // Create form data for the post and file
+    const formData = new FormData();
+    formData.append('title', newPost.title);
+    formData.append('content', newPost.content);
+    formData.append('category', newPost.category);
+    if (file.value) {
+      formData.append('file', file.value);
+    }
+
+    await postService.addPost(formData, token);
     alert('Post added successfully!');
     clearForm();
-    router.push('/board/1');
+    router.push('/howto');
   } catch (error) {
     console.error(error);
     alert('Failed to add post');
@@ -37,6 +50,7 @@ const clearForm = () => {
   title.value = '';
   content.value = '';
   selectedCategory.value = '';
+  file.value = null;
 };
 </script>
 
@@ -54,12 +68,7 @@ const clearForm = () => {
             <label for="body">본문</label>
             <Textarea v-model="content" id="body" required rows="12" cols="120" class="full" />
           </div>
-<!-- 렌더링된 LaTeX 구문을 표시할 부분 -->
-<div v-if="content">
-    <h3>미리보기:</h3>
-    <MathRenderer :content="content" />
-  </div>
-  <Divider/>
+
           <div class="field">
             <label class="mb-3">분류</label>
             <div class="formgrid grid">
@@ -69,7 +78,6 @@ const clearForm = () => {
               </div>
             </div>
           </div>
-
           <div class="button-group">
             <Button label="취소" icon="pi pi-times" text @click="clearForm" />
             <Button label="저장" icon="pi pi-check" text type="submit" />
@@ -78,9 +86,6 @@ const clearForm = () => {
       </div>
     </div>
   </div>
-
-  
-
   <AppConfig simple />
 </template>
 

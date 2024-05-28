@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AppLayout from '@/layout/AppLayout.vue';
+import AppLayoutLanding from '@/layout/AppLayoutLanding.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -10,100 +11,81 @@ const router = createRouter({
             children: [
                 {
                     path: '/',
-                    name: 'Home',
-                    component: () => import('@/views/Home.vue')
+                    name: 'home',
+                    component: () => import('@/views/home.vue')
                 },
                 {
-                    path: '/board/mypage',
-                    name: 'mypage',
-                    component: () => import('@/views/board/mypage.vue')
+                    path: '/howto',
+                    name: 'boardHowto',
+                    component: () => import('@/views/howto/boardHowto.vue')
                 },
                 {
-                    path: '/board/1',
-                    name: 'board1',
-                    component: () => import('@/views/board/1.vue')
+                    path: '/howto/:postId',
+                    name: 'postHowto',
+                    component: () => import('@/views/howto/postHowto.vue')
                 },
                 {
-                    path: '/board/2',
-                    name: 'board2',
-                    component: () => import('@/views/board/2.vue')
+                    path: '/howto/add',
+                    name: 'addHowto',
+                    component: () => import('@/views/howto/addHowto.vue')
                 },
                 {
-                    path: '/board/3',
+                    path: '/howto/addLatex',
+                    name: 'addLatexHowto',
+                    component: () => import('@/views/howto/addLatexHowto.vue')
+                },
+                {
+                    path: '/request',
                     name: 'request',
-                    component: () => import('@/views/board/3.vue')
+                    component: () => import('@/views/request/boardRequest.vue')
                 },
                 {
-                    path: '/requestForm',
-                    name: 'requestForm',
-                    component: () => import('@/views/board/requestForm.vue')
-                },
-                {
-                    path: '/board/mypage',
-                    name: 'mypage',
-                    component: () => import('@/views/board/mypage.vue')
-                },
-                {
-                    path: '/addpost',
-                    name: 'addpost',
-                    component: () => import('@/views/post/addpost.vue')
-                },
-                {
-                    path: '/latexpost',
-                    name: 'latexpost',
-                    component: () => import('@/views/post/latexPost.vue')
-                },
-                {
-                    path: '/post/:postId',
-                    name: 'post',
-                    component: () => import('@/views/post/post.vue')
-                },
-                {
-                    path: '/request/:requestId/answer',
-                    name: 'answer',
-                    component: () => import('@/views/request/answer.vue')
+                    path: '/request/add',
+                    name: 'requestAdd',
+                    component: () => import('@/views/request/addRequest.vue')
                 },
                 {
                     path: '/request/:requestId',
                     name: 'requestId',
-                    component: () => import('@/views/request/request.vue')
+                    component: () => import('@/views/request/postRequest.vue')
                 },
+                {
+                    path: '/request/:requestId/letmedo',
+                    name: 'letMeDo',
+                    component: () => import('@/views/request/letmedo.vue')
+                },
+                {
+                    path: '/mypage',
+                    name: 'mypage',
+                    component: () => import('@/views/user/mypage.vue')
+                },
+            ]
+        },
+        {
+            path: '/',
+            component: AppLayoutLanding,
+            children: [
+                {
+                    path: '/landing',
+                    name: 'landing',
+                    component: () => import('@/views/user/landing.vue')
+                }
             ]
         },
         {
             path: '/signin',
             name: 'signin',
-            component: () => import('@/views/board/signin.vue')
+            component: () => import('@/views/user/signin.vue')
         },
         {
-            path: '/board/prepage',
-            name: 'prepage',
-            component: () => import('@/views/board/prepage.vue')
+            path: '/login',
+            name: 'login',
+            component: () => import('@/views/user/login.vue')
         },
         {
-            path: '/landing',
-            name: 'landing',
-            component: () => import('@/views/pages/Landing.vue')
-        },
-        {
-            path: '/pages/notfound',
+            path: '/notfound',
             name: 'notfound',
-            component: () => import('@/views/pages/NotFound.vue')
-        },
-        {
-            path: '/loginpage',
-            name: 'loginpage',
-            component: () => import('@/views/board/loginpage.vue')
-        },
-        {
-            path: '/auth/access',
-            name: 'accessDenied',
-            component: () => import('@/views/pages/auth/Access.vue')
-        },
-        {
-            path: '/auth/error',
-            name: 'error',
-            component: () => import('@/views/pages/auth/Error.vue')
+            component: () => import('@/views/NotFound.vue')
         }
     ]
 });

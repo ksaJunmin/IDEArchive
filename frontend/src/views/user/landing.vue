@@ -25,7 +25,7 @@
         <h3>멘토링 아카이브 게시판</h3>
         <p>멘토링 아카이브 글들에 대해서 이야기해보세요</p>
       </div>
-      <router-link to="/" class="button">Join Us</router-link>
+      <router-link to="/signin" class="button">Join Us</router-link>
     </section>
   </div>
 </template>

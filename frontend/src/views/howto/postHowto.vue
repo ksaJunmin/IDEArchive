@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { PostService } from '@/service/PostService.js';
 import { CommentService } from '@/service/CommentService.js';
-import MathRenderer from '@/views/post/MathRenderer.vue';
+import MathRenderer from '@/views/howto/MathRenderer.vue';
 
 const postService = new PostService();
 const commentService = new CommentService();

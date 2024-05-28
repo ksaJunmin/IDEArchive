@@ -3,7 +3,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RequestService } from '@/service/RequestService.js';
-import MathRenderer from '@/views/post/MathRenderer.vue';
+import MathRenderer from '@/views/howto/MathRenderer.vue';
 
 const requestService = new RequestService();
 const route = useRoute();
@@ -49,7 +49,7 @@ const addComment = async () => {
 };
 
 const addAnswer = (id) => {
-  router.push(`/request/${id}/answer`);
+  router.push(`/request/${id}/letmedo`);
 };
 
 const chooseAnswer = async (id) => {

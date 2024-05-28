@@ -22,7 +22,7 @@ onMounted(() => {
   postService.getPosts().then((data) => {
     const sortedDataRcmest = data.sort((a, b) => b.like - a.like);
     dataviewValue.value = sortedDataRcmest.slice(0, 3);
-    const sortedDataLatest = data.sort((a, b) => b._id - a._id);
+    const sortedDataLatest = data.sort((a, b) => b.date - a.date);
     dataviewValue2.value = sortedDataLatest.slice(0, 3);
   });
   /*Promise.all([postService.getpostsSmall1(), postService.getpostsSmall2()]).then(([data1, data2]) => {

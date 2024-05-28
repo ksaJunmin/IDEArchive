@@ -49,7 +49,7 @@ const postRequest = async () => {
     await requestService.postRequest(newRequest.value, token);
     // 성공적으로 게시된 의뢰 처리
     resetForm();
-    router.push('/board/3');
+    router.push('/request');
   }
   } catch (error) {
     console.error('Error creating request: ', error.message);

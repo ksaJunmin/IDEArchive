@@ -3,13 +3,13 @@
 import { ref, onMounted } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
-import { PostService } from '@/service/PostService.js';
+import { RequestService } from '@/service/RequestService.js';
 
 const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
 const sortOrder = ref(-1);
-const sortField = ref('date');
+const sortField = ref('_id');
 const sortOptions = ref([
   { label: '최신순', value: '!date' },
   { label: '오래된 순', value: 'date' },
@@ -29,10 +29,10 @@ const sortSubject = ref([
   { label: '기타', value: '기타' },
 ]);
 
-const postService = new PostService();
+const requestService = new RequestService();
 
 onMounted(() => {
-  postService.getPosts().then((data) => {
+  requestService.getRequests().then((data) => {
     dataviewValue.value = data;
   });
 });
@@ -64,16 +64,17 @@ const onSortSubject = (event) => {
   });
 };
 
-const goToPost = (id) => {
-  router.push('/post/' + id);
+const goToRequest = (requestId) => {
+  router.push('/request/' + requestId);
 };
 
-const goToAddPost = () => {
-  router.push('/addpost');
+const goToAddRequest = () => {
+  router.push('/request/add');
 };
+/*
 const goToLatexPost = () => {
   router.push('/latexpost');
-};
+};*/
 </script>
 
 <template>
@@ -85,8 +86,8 @@ const goToLatexPost = () => {
         <Toolbar class="mb-4">
           <template v-slot:start>
             <div class="my-2">
-              <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToAddPost" />
-              <Button label="수식 쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToLatexPost" />
+              <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToAddRequest" />
+              <!--<Button label="수식 쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToLatexPost" />-->
             </div>
           </template>
         </Toolbar>
@@ -105,7 +106,7 @@ const goToLatexPost = () => {
           <template #list="slotProps">
             <div class="grid grid-nogutter">
               <div v-for="(item, index) in slotProps.items" :key="item._id" class="col-12">
-                <div class="flex flex-column p-4 gap-3 cursor-pointer" :class="{ 'border-top-1 surface-border': index !== 0 }" @click="goToPost(item._id)">
+                <div class="flex flex-column p-4 gap-3 cursor-pointer" :class="{ 'border-top-1 surface-border': index !== 0 }" @click="goToRequest(item._id)">
                   <div class="flex flex-column justify-content-between flex-1">
                     <div class="flex flex-row justify-content-between align-items-start gap-2">
                       <div class="min-w-0">

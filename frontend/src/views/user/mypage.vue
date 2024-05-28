@@ -35,7 +35,7 @@ onMounted(getProfile);
         </template>
 
         <template v-slot:content>
-          <img src="/src/views/board/mypageimage/profile.png" alt="Image" style="max-width: 100%; height: auto" />
+          <img src="/src/views/user/mypageimage/profile.png" alt="Image" style="max-width: 100%; height: auto" />
         </template>
       </Card>
     </div>
