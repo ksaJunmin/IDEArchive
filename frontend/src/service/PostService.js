@@ -2,23 +2,24 @@ import axios from 'axios';
 
 const API = import.meta.env.VITE_API_URL_1
 
+
 export class PostService {
   async getPosts() {
     const res = await axios.get(API);
     return res.data;
   }
 
-  async getPostById(postId) {
+  async getPostById (postId) {
     const res = await axios.get(`${API}/${postId}`);
     return res.data;
   }
 
-  async addPost(newPost, token) {
+  async addPost(formData, token) {
     try {
-      const response = await axios.post(`${API}/add`, newPost, {
+      const response = await axios.post(`${API}/add`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       });
       return response.data;

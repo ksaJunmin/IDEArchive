@@ -11,14 +11,22 @@ const title = ref('');
 const content = ref('');
 const selectedCategory = ref('');
 const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
+const file = ref('');
 
+const onFileChange = (e) => {
+  file.value = e.target.files[0];
+};
 
 const addPost = async () => {
-  
+  const formData = new FormData();
+  formData.append('title', title.value);
+  formData.append('content', content.value);
+  formData.append('category', selectedCategory.value);
+  formData.append('islatex', 0);
+  formData.append('file', file.value);
 
   try {
     const token = localStorage.getItem('token');
-
     await postService.addPost(formData, token);
     alert('Post added successfully!');
     clearForm();
@@ -60,6 +68,11 @@ const clearForm = () => {
               </div>
             </div>
           </div>
+            <div>
+          <label for="file">File</label>
+          <input type="file" @change="onFileChange" required />
+        </div>
+
           <div class="button-group">
             <Button label="취소" icon="pi pi-times" text @click="clearForm" />
             <Button label="저장" icon="pi pi-check" text type="submit" />

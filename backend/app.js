@@ -6,7 +6,6 @@ import usersRouter from './routes/users.js';
 import postsRouter from './routes/posts.js';
 import commentsRouter from './routes/comments.js';
 import requestsRouter from './routes/requests.js';
-import fileUpload from 'express-fileupload';
 
 const app = express();
 

@@ -30,6 +30,13 @@ const PostSchema = new Schema({
   islatex:{
     type: Number,
     default: 0
+  },
+  fileId: {
+    type: Schema.Types.ObjectId,
+    ref: 'uploads.files'
+  },
+  originalname: {
+    type: String
   }
 });
 

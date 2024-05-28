@@ -62,10 +62,21 @@ const addReply = async (commentId) => {
   }
 };
 
+const downloadFile = (fileId) => {
+  const downloadUrl = `/download/${fileId}`;
+  const link = document.createElement('a');
+  link.href = downloadUrl;
+  link.download = ''; // Optionally set a default filename
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 onMounted(async () => {
   try {
     const data = await postService.getPostById(postId.value);
-    post.value = data;
+    post.value = data.post;
+    file.value = data.file;
   } catch (error) {
     console.error('Error fetching post:', error);
   }
@@ -108,6 +119,9 @@ onMounted(async () => {
           <div v-else  class="font-medium">
             {{ post.content }}
           </div>
+          <div v-if="file">
+            <Button label="파일 다운로드" icon="pi pi-download" @click="downloadFile(post.fileId)"></Button>
+          </div>
           <div>
             <div class="flex flex-column mt-4 align-items-center justify-center">
               <div class="flex gap-2">
@@ -147,7 +161,6 @@ onMounted(async () => {
               <p>로그인 후 댓글을 작성할 수 있습니다.</p>
             </div>
           </div>
-
           
         </div>
       </div>
