@@ -9,6 +9,8 @@ const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
 const router = useRouter();
 
+const token = localStorage.getItem('token');
+
 onMounted(() => {
     bindOutsideClickListener();
 });
@@ -33,9 +35,9 @@ const onLoginClick = () => {
     topbarMenuActive.value = false;
     router.push('/login');
 };
-const onSettingsClick = () => {
+const onMypageClick = () => {
     topbarMenuActive.value = false;
-    router.push('/documentation');
+    router.push('/mypage');
 };
 const topbarMenuClasses = computed(() => {
     return {
@@ -85,14 +87,23 @@ const isOutsideClicked = (event) => {
         </button>
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
-            <button @click="onSignInClick()" class="p-link layout-topbar-button">
-                <i class="pi pi-user-plus"></i>
-                <span>회원가입</span>
-            </button>
-            <button @click="onLoginClick()" class="p-link layout-topbar-button">
-                <i class="pi pi-user"></i>
-                <span>마이페이지</span>
-            </button>
+            <div v-if="!token">
+                <button @click="onSignInClick()" class="p-link layout-topbar-button">
+                    <i class="pi pi-user-plus"></i>
+                    <span>회원가입</span>
+                </button>
+                
+                <button @click="onLoginClick()" class="p-link layout-topbar-button">
+                    <i class="pi pi-user"></i>
+                    <span>로그인</span>
+                </button>
+            </div>
+            <div v-else>
+                <button @click="onMypageClick()" class="p-link layout-topbar-button">
+                    <i class="pi pi-user"></i>
+                    <span>마이페이지</span>
+                </button>
+            </div>
         </div>
     </div>
 </template>

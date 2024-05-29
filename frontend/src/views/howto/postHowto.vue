@@ -31,7 +31,6 @@ const isLoggedIn = ref(false);
 
 const fileData = ref(null);
 const fileUrl = ref('');
-const decodedFileName = ref('');
 
 const fetchComments = async () => {
   try {
@@ -72,7 +71,6 @@ onMounted(async () => {
     post.value = data.post;
     if (data.file) {
       fileData.value = data.file;
-      decodedFileName.value = decodeURIComponent(data.originalname);
       const binary = atob(fileData.value);
       const array = [];
       for (let i = 0; i < binary.length; i++) {
@@ -116,14 +114,15 @@ onMounted(async () => {
             <div>{{ post.author.schoolID }} {{ post.author.name }}</div>
           </div>
           <Divider />
+          <div class="font-medium">
+            {{ post.content1 }}
+          </div>
           <!-- 렌더링된 LaTeX 구문을 표시할 부분 -->
-          <div v-if="post.islatex == 1"  class="font-medium">
-            <MathRenderer :content="post.content" />
+          <Divider />
+          <div class="font-medium">
+            <MathRenderer :content="post.content2" />
           </div>
-          <div v-else  class="font-medium">
-            {{ post.content }}
-          </div>
-          <p v-if="fileData"><strong>업로드한 파일:</strong> <a :href="fileUrl" :download="post.originalname">{{ post.originalname }}</a></p>
+          <p v-if="fileData"><strong>업로드한 파일:</strong> <a :href="fileUrl" :download="post.originalname">{{ post.filename }}</a></p>
           <div>
             <div class="flex flex-column mt-4 align-items-center justify-center">
               <div class="flex gap-2">

@@ -109,5 +109,28 @@ router.patch('/:requestId/choose-answer/:answerId', async (req, res) => {
     }
 });
 
+router.patch('/:requestId/like', authenticateToken, async (req, res) => {
+    try {
+      const userId = await req.user.userId;
+      const request = await Request.findById(req.params.requestId).populate('author');
+      if (!request) return res.status(404).json('Post not found');
+  
+      const userIdStr = userId.toString();
+  
+      if (request.likedBy.some(id => id.toString() === userIdStr)) {
+        request.likedBy = request.likedBy.filter(id => id.toString() !== userIdStr);
+        request.like -= 1;
+      } else {
+        request.likedBy.push(userId);
+        request.like += 1;
+      }
+  
+      const updatedRequest = await request.save();
+      res.json(updatedRequest);
+    } catch (err) {
+      res.status(400).json('Error: ' + err);
+    }
+  });
+
 
 export default router;

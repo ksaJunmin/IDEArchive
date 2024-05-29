@@ -66,4 +66,14 @@ export class RequestService {
       throw Error(`API Error: ${error.response.statusText}`);
     }
   }
+
+  async updateLike(token, requestId) {
+    const res = await axios.patch(`${API}/${requestId}/like`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return res.data;
+  }
 };

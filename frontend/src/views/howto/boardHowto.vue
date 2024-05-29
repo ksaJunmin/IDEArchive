@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
 import { PostService } from '@/service/PostService.js';
+import MathRenderer from '@/views/howto/MathRenderer.vue';
 
 const router = useRouter();
 const dataviewValue = ref(null);
@@ -86,7 +87,6 @@ const goToLatexPost = () => {
           <template v-slot:start>
             <div class="my-2">
               <Button label="글쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToAddPost" />
-              <Button label="수식 쓰기" icon="pi pi-plus" class="mr-2" severity="success" @click="goToLatexPost" />
             </div>
           </template>
         </Toolbar>
@@ -110,7 +110,10 @@ const goToLatexPost = () => {
                     <div class="flex flex-row justify-content-between align-items-start gap-2">
                       <div class="min-w-0">
                         <div class="text-lg font-medium text-900 mt-2 ellipsis">{{ item.title }}</div>
-                        <div class="font-medium text-secondary text-sm ellipsis">{{ item.content }}</div>
+                        <div class="font-medium text-secondary text-sm ellipsis">{{ item.content1 }}</div>
+                        
+                          <div class="font-medium text-secondary text-sm ellipsis"><MathRenderer :content="item.content2"> </MathRenderer></div>
+                        
                       </div>
                       <div class="surface-100 p-1" style="border-radius: 30px">
                         <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">

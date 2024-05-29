@@ -14,14 +14,14 @@ const request = ref(null);
 
 const token = localStorage.getItem('token');
 
-/*const handleLike = async () => {
+const handleLike = async () => {
   try {
-    const updatedPost = await postService.updateLike(token, postId.value);
-    post.value = updatedPost;
+    const updatedRequest = await requestService.updateLike(token, requestId.value);
+    request.value = updatedRequest;
   } catch (error) {
     console.error('Error updating like:', error);
   }
-};*/
+};
 
 const answers = ref([]);
 const isLoggedIn = ref(false);

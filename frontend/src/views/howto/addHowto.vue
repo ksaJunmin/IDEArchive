@@ -3,12 +3,14 @@ import { ref } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
 import { PostService } from '@/service/PostService.js';
+import MathRenderer from '@/views/howto/MathRenderer.vue';
 
 const postService = new PostService();
 const router = useRouter();
 
 const title = ref('');
-const content = ref('');
+const content1 = ref('');
+const content2 = ref('');
 const selectedCategory = ref('');
 const categories = ['수학', '정보', '물리', '화학', '생물','지구과학','인문','기타'];
 const file = ref('');
@@ -20,10 +22,20 @@ const onFileChange = (e) => {
 const addPost = async () => {
   const formData = new FormData();
   formData.append('title', title.value);
-  formData.append('content', content.value);
+  formData.append('content1', content1.value);
+  formData.append('content2', content2.value);
   formData.append('category', selectedCategory.value);
-  formData.append('islatex', 0);
   formData.append('file', file.value);
+
+  const fileInput = document.getElementById('fileInput');
+  // 선택된 파일
+  const file1 = fileInput.files[0];
+  // 파일 이름
+  const filename = file1.name;
+  console.log(filename);
+
+  formData.append('filename', filename);
+
 
   try {
     const token = localStorage.getItem('token');
@@ -39,7 +51,8 @@ const addPost = async () => {
 
 const clearForm = () => {
   title.value = '';
-  content.value = '';
+  content1.value = '';
+  content2.value = '';
   selectedCategory.value = '';
 };
 </script>
@@ -56,9 +69,18 @@ const clearForm = () => {
           </div>
           <div class="field">
             <label for="body">본문</label>
-            <Textarea v-model="content" id="body" required rows="12" cols="120" class="full" />
+            <Textarea v-model="content1" id="content1" required rows="12" cols="120" class="full" />
           </div>
 
+          <div class="field">
+            <label for="body">수식(LaTeX)</label>
+            <Textarea v-model="content2" id="content2" required rows="12" cols="120" class="full" />
+          </div>
+
+          <div v-if="content2">
+            <h3>미리보기:</h3>
+            <MathRenderer :content="content2" />
+          </div>
           <div class="field">
             <label class="mb-3">분류</label>
             <div class="formgrid grid">
@@ -69,9 +91,8 @@ const clearForm = () => {
             </div>
           </div>
             <div>
-          <label for="file">File</label>
-          <input type="file" @change="onFileChange" required />
-        </div>
+              <input type="file" id="fileInput" @change="onFileChange"/>
+            </div>
 
           <div class="button-group">
             <Button label="취소" icon="pi pi-times" text @click="clearForm" />
@@ -121,5 +142,17 @@ const clearForm = () => {
 
 button {
   width: 48%;
+
+}input[type=file]::file-selector-button {
+  width: 100px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #10b981;
+  }
 }
+
 </style>

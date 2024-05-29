@@ -11,10 +11,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 // Create a new post
 router.post('/add', authenticateToken, upload.single('file'), async (req, res) => {
-  const { title, content, category, islatex } = req.body;
+  const { title, content1, content2, category, filename } = req.body;
   const author = req.user.userId;
   const {buffer, originalname} = req.file;
-  const encodedOriginalName = encodeURIComponent(originalname);
 
   const bucket = new GridFSBucket(mongoose.connection.db, {
     bucketName: 'uploads'
@@ -35,12 +34,13 @@ router.post('/add', authenticateToken, upload.single('file'), async (req, res) =
   uploadStream.on('finish', async () => {
     const newPost = new Post({
       title,
-      content,
+      content1,
+      content2,
       category,
       author,
-      islatex,
       fileId: uploadStream.id,
-      originalname: encodedOriginalName
+      originalname: originalname,
+      filename: filename
     });
 
     try {
