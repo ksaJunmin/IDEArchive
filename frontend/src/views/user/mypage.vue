@@ -61,8 +61,12 @@ onMounted(getProfile);
     <div class="col-12 md:col-12">
       <div class="card p-fluid">
         <div class="stats">
-          <div>내가 작성한 글의 수: <strong>10</strong></div>
-          <div>내가 의뢰한 수: <strong>5</strong></div>
+          <div>내가 작성한 글의 수: 
+            <div><strong>{{ user.numHowto }}</strong></div>
+          </div>
+          <div>내가 의뢰한 수:
+            <div><strong>{{ user.numReq }}</strong></div>
+          </div>
         </div>
       </div>
     </div>

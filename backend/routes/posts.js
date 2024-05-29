@@ -42,7 +42,11 @@ router.post('/add', authenticateToken, upload.single('file'), async (req, res) =
       originalname: originalname,
       filename: filename
     });
-
+    if (author.numHowto) {
+      author.numHowto += 1;
+      const updatedAuthor = await author.save();
+    };
+    
     try {
       const savedPost = await newPost.save();
       res.json(savedPost);

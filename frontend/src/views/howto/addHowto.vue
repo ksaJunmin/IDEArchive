@@ -74,7 +74,7 @@ const clearForm = () => {
 
           <div class="field">
             <label for="body">수식(LaTeX)</label>
-            <Textarea v-model="content2" id="content2" required rows="12" cols="120" class="full" />
+            <Textarea v-model="content2" id="content2" rows="12" cols="120" class="full" />
           </div>
 
           <div v-if="content2">

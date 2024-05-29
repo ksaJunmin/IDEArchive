@@ -36,6 +36,14 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 1000, 
   },
+  numReq: {
+    type: Number,
+    default: 0
+  },
+  numHowto: {
+    type: Number,
+    default: 0
+  }
 });
 
 

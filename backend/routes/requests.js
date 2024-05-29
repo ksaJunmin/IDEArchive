@@ -36,6 +36,10 @@ router.post('/', authenticateToken, async (req, res) => {
         points: req.body.points
     });
 
+    if (author.numReq) {
+      author.numReq += 1;
+      const updatedAuthor = await author.save();
+    };
     try {
         const newRequest = await request.save();
         res.status(201).json(newRequest);

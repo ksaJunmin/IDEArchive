@@ -67,7 +67,7 @@ router.get('/info', authenticateToken, async (req, res) => {
     if (!user) {
       return res.sendStatus(404); // 사용자가 없으면 404 Not Found 반환
     }
-    res.json({ name: user.name, schoolID: user.schoolID, email: user.email, points: user.points });
+    res.json({ name: user.name, schoolID: user.schoolID, email: user.email, points: user.points, numReq: user.numReq, numHowto: user.numHowto });
   
   } catch (error) {
     console.error('Error fetching user profile:', error);
