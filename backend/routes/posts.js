@@ -4,8 +4,6 @@ import Post from '../db/post.js';
 import { authenticateToken } from './auth.js';
 import { mongoose } from 'mongoose';
 
-import fs from 'fs';
-import path from 'path';
 import multer from 'multer';
 import { GridFSBucket } from 'mongodb';
 import { Readable } from 'stream';
@@ -16,12 +14,11 @@ router.post('/add', authenticateToken, upload.single('file'), async (req, res) =
   const { title, content, category, islatex } = req.body;
   const author = req.user.userId;
   const {buffer, originalname} = req.file;
+  const encodedOriginalName = encodeURIComponent(originalname);
 
   const bucket = new GridFSBucket(mongoose.connection.db, {
     bucketName: 'uploads'
   });
-
-  downloadStream.setEncoding('utf8');
 
   const readableStream = new Readable();
   readableStream.push(buffer);
@@ -43,7 +40,7 @@ router.post('/add', authenticateToken, upload.single('file'), async (req, res) =
       author,
       islatex,
       fileId: uploadStream.id,
-      originalname: originalname
+      originalname: encodedOriginalName
     });
 
     try {
@@ -72,21 +69,26 @@ router.get('/:postId', async (req, res) => {
     const bucket = new GridFSBucket(mongoose.connection.db, {
       bucketName: 'uploads'
     });
-    
+
     if (post.fileId) {
       const downloadStream = bucket.openDownloadStream(post.fileId);
-      let fileData = '';
+      let chunks = [];
+
       downloadStream.on('data', (chunk) => {
-        fileData += chunk;
+        chunks.push(chunk);
       });
+
       downloadStream.on('end', () => {
-        res.json({ post, file: fileData });
+        const fileData = Buffer.concat(chunks);
+        const base64File = fileData.toString('base64');
+        res.json({ post, file: base64File, originalname: post.originalname });
       });
+
       downloadStream.on('error', (err) => {
         res.status(500).json('Error: ' + err);
       });
     } else {
-      res.json(post);
+      res.json({ post });
     }
   } catch (err) {
     res.status(400).json('Error: ' + err);
@@ -96,7 +98,7 @@ router.get('/:postId', async (req, res) => {
 router.patch('/:postId/like', authenticateToken, async (req, res) => {
   try {
     const userId = await req.user.userId;
-    const post = await Post.findById(req.params.postId);
+    const post = await Post.findById(req.params.postId).populate('author');
     if (!post) return res.status(404).json('Post not found');
 
     const userIdStr = userId.toString();

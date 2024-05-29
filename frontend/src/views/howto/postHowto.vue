@@ -29,6 +29,9 @@ const newComment = ref('');
 const replyContent = ref({});
 const isLoggedIn = ref(false);
 
+const fileData = ref(null);
+const fileUrl = ref('');
+const decodedFileName = ref('');
 
 const fetchComments = async () => {
   try {
@@ -62,21 +65,22 @@ const addReply = async (commentId) => {
   }
 };
 
-const downloadFile = (fileId) => {
-  const downloadUrl = `/download/${fileId}`;
-  const link = document.createElement('a');
-  link.href = downloadUrl;
-  link.download = ''; // Optionally set a default filename
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
 
 onMounted(async () => {
   try {
     const data = await postService.getPostById(postId.value);
     post.value = data.post;
-    file.value = data.file;
+    if (data.file) {
+      fileData.value = data.file;
+      decodedFileName.value = decodeURIComponent(data.originalname);
+      const binary = atob(fileData.value);
+      const array = [];
+      for (let i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+      }
+      const blob = new Blob([new Uint8Array(array)], { type: 'application/octet-stream' });
+      fileUrl.value = URL.createObjectURL(blob);
+    }
   } catch (error) {
     console.error('Error fetching post:', error);
   }
@@ -119,9 +123,7 @@ onMounted(async () => {
           <div v-else  class="font-medium">
             {{ post.content }}
           </div>
-          <div v-if="file">
-            <Button label="파일 다운로드" icon="pi pi-download" @click="downloadFile(post.fileId)"></Button>
-          </div>
+          <p v-if="fileData"><strong>업로드한 파일:</strong> <a :href="fileUrl" :download="post.originalname">{{ post.originalname }}</a></p>
           <div>
             <div class="flex flex-column mt-4 align-items-center justify-center">
               <div class="flex gap-2">
@@ -161,49 +163,10 @@ onMounted(async () => {
               <p>로그인 후 댓글을 작성할 수 있습니다.</p>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
   </div>
-    <!---
-    <div class="grid">
-        <div class="col-12">
-            <div class="card">
-                <div v-if="post">
-                    <h2>{{ post.title }}</h2>
-                    <div>
-                        <div class="flex flex-row gap-2 mt-4 align-items-center">
-                            <div class="text-gray-500">{{ post.date }}</div>
-                            <div class="surface-100 p-1" style="border-radius: 30px">
-                                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
-                                    <div class="text-900 font-medium text-sm">{{ post.like }}</div>
-                                    <i class="pi pi-thumbs-up"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <Divider />
-                    <div class="font-medium">{{ post.content }}</div>
-                    <div>
-                        <div class="flex flex-column mt-4 align-items-center justify-center">
-                            <div class="flex gap-2">
-                                <Button label="좋아요" icon="pi pi-thumbs-up" @click="handleLike(1)"></Button>
-                                <Button label="싫어요" icon="pi pi-thumbs-down" outlined @click="handleLike(-1)"></Button>
-                            </div>
-                        </div>
-                    </div>
-                    <Divider />
-                    <div class="text-gray-500">댓글 0</div>
-                    <div class="flex gap-2">
-                        <Textarea placeholder="댓글을 입력하세요" :autoResize="true" rows="1" cols="50" />
-                        <Button label="입력" class="mr-10 mb-10"></Button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
--->
 </template>
 
 <style scoped>
