@@ -6,6 +6,7 @@ import usersRouter from './routes/users.js';
 import postsRouter from './routes/posts.js';
 import commentsRouter from './routes/comments.js';
 import requestsRouter from './routes/requests.js';
+import notificationsRouter from './routes/notification.js';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/requests', requestsRouter);
+//app.use('/notifications', notificationsRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(path.resolve(), 'public', 'index.html'));

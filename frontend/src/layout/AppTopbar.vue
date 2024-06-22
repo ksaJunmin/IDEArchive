@@ -35,6 +35,12 @@ const onLoginClick = () => {
     topbarMenuActive.value = false;
     router.push('/login');
 };
+
+const onNotificationClick = () => {
+    topbarMenuActive.value = false;
+    router.push('/notification');
+}
+
 const onMypageClick = () => {
     topbarMenuActive.value = false;
     router.push('/mypage');
@@ -99,6 +105,12 @@ const isOutsideClicked = (event) => {
                 </button>
             </div>
             <div v-else>
+                <button @click="onNotificationClick()" class="p-link layout-topbar-button">
+                    <OverlayBadge value="2">
+                        <i class="pi pi-bell" style="font-size: 2rem" />
+                    </OverlayBadge>
+                    <span>알림</span>
+                </button>
                 <button @click="onMypageClick()" class="p-link layout-topbar-button">
                     <i class="pi pi-user"></i>
                     <span>마이페이지</span>
