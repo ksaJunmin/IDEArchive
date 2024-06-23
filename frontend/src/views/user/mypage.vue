@@ -84,7 +84,6 @@ onMounted(getProfile);
         </div>
       </div>
     </div>
-    <Button class="center-aligned"> 로그아웃 </Button>
   </div>
 </template>
 
