@@ -18,7 +18,6 @@ const addAnswer = async () => {
   };
 
   try {
-    console.log(requestId.value);
     const token = localStorage.getItem('token');
     await requestService.addAnswer(requestId.value, newAnswer, token);
     alert('Answer added successfully!');

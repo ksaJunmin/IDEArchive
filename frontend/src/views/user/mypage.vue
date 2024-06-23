@@ -29,7 +29,6 @@ onMounted(getProfile);
         <template v-slot:title>
           <div class="flex align-items-center justify-content-between mb-0">
             <h5><strong>나의 프로필</strong></h5>
-            <Button icon="pi pi-plus" class="p-button-text" @click="toggle" />
           </div>
           <Menu id="config_menu" ref="menuRef" :model="cardMenu" :popup="true" />
         </template>

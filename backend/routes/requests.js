@@ -3,6 +3,7 @@ const router = Router();
 import Request from '../db/request.js';
 import Answer from '../db/answer.js';
 import User from '../db/user.js';
+import Notification from '../db/notification.js';
 import { authenticateToken } from './auth.js';
 
 // 의뢰 목록 가져오기
@@ -35,7 +36,7 @@ router.post('/', authenticateToken, async (req, res) => {
         author: req.user.userId,
         points: req.body.points
     });
-
+    const author = await User.findById(req.user.userId);
     if (author.numReq) {
       author.numReq += 1;
       const updatedAuthor = await author.save();
@@ -96,17 +97,20 @@ router.patch('/:requestId/choose-answer/:answerId', async (req, res) => {
         const user2 = await User.findById(answer.author);
         const pointsToTransfer = request.points;
 
-        // 요청자의 포인트를 줄입니다.
         user1.points -= pointsToTransfer;
-
-        // 답변자의 포인트를 늘립니다.
         user2.points += pointsToTransfer;
 
-        // 데이터베이스에 변경사항을 저장합니다.
+        const notification = new Notification({
+          userId: user2._id,
+          request: req.params.requestId,
+          kind: 'selected'
+        })
+
         await Promise.all([user1.save(), user2.save()]);
 
         await request.save();
-
+        await notification.save();
+        
         res.json(answer);
     } catch (err) {
         res.status(500).json({ message: err.message });

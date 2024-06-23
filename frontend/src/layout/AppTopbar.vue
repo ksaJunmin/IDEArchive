@@ -2,6 +2,11 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '@/layout/composables/layout';
 import { useRouter } from 'vue-router';
+import { UserService } from '@/service/UserService.js';
+
+const user = ref(null);
+
+const userService = new UserService();
 
 const { layoutConfig, onMenuToggle } = useLayout();
 
@@ -9,10 +14,13 @@ const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
 const router = useRouter();
 
+
 const token = localStorage.getItem('token');
 
-onMounted(() => {
+
+onMounted(async () => {
     bindOutsideClickListener();
+    if (!token || isTokenExpired(token)) {router.push('/landing')};
 });
 
 onBeforeUnmount(() => {
@@ -114,9 +122,7 @@ const isTokenExpired = (token) => {
             </div>
             <div v-else>
                 <button @click="onNotificationClick()" class="p-link layout-topbar-button">
-                    <OverlayBadge value="2">
-                        <i class="pi pi-bell" style="font-size: 2rem" />
-                    </OverlayBadge>
+                    <i class="pi pi-bell"></i>
                     <span>알림</span>
                 </button>
                 <button @click="onMypageClick()" class="p-link layout-topbar-button">
@@ -127,5 +133,3 @@ const isTokenExpired = (token) => {
         </div>
     </div>
 </template>
-
-<style lang="scss" scoped></style>

@@ -13,6 +13,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post('/add', authenticateToken, upload.single('file'), async (req, res) => {
   const { title, content1, content2, category, filename } = req.body;
   const author = req.user.userId;
+  if (req.file != undefined) {
   const {buffer, originalname} = req.file;
 
   const bucket = new GridFSBucket(mongoose.connection.db, {
@@ -46,15 +47,35 @@ router.post('/add', authenticateToken, upload.single('file'), async (req, res) =
       author.numHowto += 1;
       const updatedAuthor = await author.save();
     };
-    
+
     try {
       const savedPost = await newPost.save();
       res.json(savedPost);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
-  });
-});
+  })}
+  else {
+    const newPost = new Post({
+      title,
+      content1,
+      content2,
+      category,
+      author
+    });
+    if (author.numHowto) {
+      author.numHowto += 1;
+      const updatedAuthor = await author.save();
+    };
+
+    try {
+      const savedPost = await newPost.save();
+      res.json(savedPost);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  };
+})
 
 router.get('/', async (req, res) => {
   try {

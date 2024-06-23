@@ -23,13 +23,8 @@ const login = async () => {
   try {
     const response = await userService.login(email.value, password.value);
     
-    // 서버로부터 토큰 등의 인증 정보를 받아 적절히 처리
     const token = response.token;
-    
-    // 토큰을 localStorage에 저장
     localStorage.setItem('token', token);
-
-    // 로그인 성공 후 홈페이지로 이동
     router.push('/');
   } catch (error) {
     loginError.value = 'Invalid email or password';

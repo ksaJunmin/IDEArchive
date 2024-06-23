@@ -6,15 +6,11 @@ const notificationSchema = new mongoose.Schema({
       required: true,
       ref: 'User'
     },
-    message: {
-      type: String,
-      required: true
+    request: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Request'
     },
-    read: {
-      type: Boolean,
-      default: false
-    },
-    createdAt: {
+    date: {
       type: Date,
       default: Date.now
     }

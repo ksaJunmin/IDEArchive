@@ -21,10 +21,6 @@
         <h3>도와줘요 게시판</h3>
         <p>KSA인들의 피드백 및 조언을 구해보세요</p>
       </div>
-      <div class="board">
-        <h3>멘토링 아카이브 게시판</h3>
-        <p>멘토링 아카이브 글들에 대해서 이야기해보세요</p>
-      </div>
       <router-link to="/signin" class="button">Sign in</router-link>
     </section>
   </div>

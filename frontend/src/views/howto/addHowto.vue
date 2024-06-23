@@ -15,7 +15,9 @@ const categories = ['수학', '정보', '물리', '화학', '생물','지구과�
 const file = ref('');
 
 const onFileChange = (e) => {
-  file.value = e.target.files[0];
+  if (e.target.files) {
+    file.value = e.target.files[0];
+  }
 };
 
 const addPost = async () => {
@@ -26,15 +28,12 @@ const addPost = async () => {
   formData.append('category', selectedCategory.value);
   formData.append('file', file.value);
 
-  const fileInput = document.getElementById('fileInput');
-  // 선택된 파일
-  const file1 = fileInput.files[0];
-  // 파일 이름
-  const filename = file1.name;
-  console.log(filename);
+  if (document.getElementById('fileInput').files[0]) {
+    const filename = document.getElementById('fileInput').files[0].name;
+    console.log(filename);
 
-  formData.append('filename', filename);
-
+    formData.append('filename', filename);
+  }
 
   try {
     const token = localStorage.getItem('token');
