@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-const secretKey = 'your_secret_key';
+const secretKey = 'cirjpscrmiw30lsciojm4po5i4';
 
 export const authenticateToken = async (req, res, next) => {
   try {

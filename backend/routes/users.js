@@ -5,7 +5,7 @@ import User from '../db/user.js';
 import jwt from 'jsonwebtoken';
 import { authenticateToken } from './auth.js';
 import bcrypt from 'bcryptjs'
-const secretKey = 'your_secret_key';
+const secretKey = 'cirjpscrmiw30lsciojm4po5i4';
 
 router.use(bodyParser.urlencoded({extended:false}));
 
