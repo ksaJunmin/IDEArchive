@@ -51,13 +51,6 @@ const login = async () => {
                         <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
                         <Password type="password" id="password" v-model="password" :feedback="false" placeholder="Password" :toggleMask="true" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
 
-                        <div class="flex align-items-center justify-content-between mb-5 gap-5">
-                            <div class="flex align-items-center">
-                                <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>
-                                <label for="rememberme1">로그인 유지</label>
-                            </div>
-                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">비밀번호를 잊으셨나요?</a>
-                        </div>
                         <Button label="로그인" class="w-full p-3 text-xl" type="submit"></Button>
                     </form>
                 </div>

@@ -60,10 +60,10 @@ onMounted(getProfile);
     <div class="col-12 md:col-12">
       <div class="card p-fluid">
         <div class="stats">
-          <div>내가 작성한 글의 수: 
+          <div>'도와줘요'에 쓴 글 수: 
             <div><strong>{{ user.numHowto }}</strong></div>
           </div>
-          <div>내가 의뢰한 수:
+          <div>'해줘요'에 쓴 글 수:
             <div><strong>{{ user.numReq }}</strong></div>
           </div>
         </div>
@@ -84,6 +84,7 @@ onMounted(getProfile);
         </div>
       </div>
     </div>
+    <Button class="center-aligned"> 로그아웃 </Button>
   </div>
 </template>
 
