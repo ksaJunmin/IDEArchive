@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
@@ -13,7 +12,18 @@ export default defineConfig(() => {
             }
         },
         build: {
-            outDir: '../backend/public'
+            outDir: '../backend/public',
+            assetsDir: 'assets',
+            rollupOptions: {
+                output: {
+                    assetFileNames: (assetInfo) => {
+                        if (/\.(woff|woff2|eot|ttf|otf)$/.test(assetInfo.name)) {
+                            return 'assets/fonts/[name].[ext]'; // 폰트를 assets/fonts 폴더로 이동
+                        }
+                        return 'assets/[name].[ext]';
+                    }
+                }
+            }
         }
     };
 });

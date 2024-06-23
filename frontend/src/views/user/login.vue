@@ -1,7 +1,6 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout.js';
 import { ref, computed } from 'vue';
-import AppConfig from '@/layout/AppConfig.vue';
 import { UserService } from '@/service/UserService.js';
 
 const userService = new UserService();
@@ -70,7 +69,6 @@ const login = async () => {
             </div>
         </div>
     </div>
-    <AppConfig simple/>
 </template>
 
 <style scoped>

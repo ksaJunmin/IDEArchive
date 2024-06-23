@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { RequestService } from '@/service/RequestService.js';
 

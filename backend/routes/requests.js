@@ -18,14 +18,14 @@ router.get('/', async (req, res) => {
 
 //특정 의뢰 가져오기
 router.get('/:requestId', async (req, res) => {
-    try {
-      const request = await Request.findById(req.params.requestId).populate('author');
-      if (!request) return res.status(404).json('Request not found');
-      res.json(request);
-    } catch (err) {
-      res.status(400).json('Error: ' + err);
-    }
-  });
+  try {
+    const request = await Request.findById(req.params.requestId).populate('author');
+    if (!request) return res.status(404).json('Request not found');
+    res.json(request);
+  } catch (err) {
+    res.status(400).json('Error: ' + err);
+  }
+});
 
 // 의뢰 게시물 작성
 router.post('/', authenticateToken, async (req, res) => {

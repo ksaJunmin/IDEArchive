@@ -15,6 +15,7 @@
   });
   
   const renderedContent = computed(() => {
+    if (!props.content) {return}
     return katex.renderToString(props.content, {
       throwOnError: false
     });

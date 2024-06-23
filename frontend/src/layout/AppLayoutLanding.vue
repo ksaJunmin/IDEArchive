@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import AppTopbarLanding from './AppTopbarLanding.vue';
 import AppFooter from './AppFooter.vue';
-import AppConfig from './AppConfig.vue';
 import { useLayout } from '@/layout/composables/layout';
 
 const { layoutConfig, layoutState } = useLayout();

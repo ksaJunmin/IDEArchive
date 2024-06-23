@@ -75,6 +75,14 @@ const isOutsideClicked = (event) => {
 
     return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
 };
+
+const isTokenExpired = (token) => {
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  const expiry = payload.exp;
+  const now = Math.floor(Date.now() / 1000);
+  
+  return now > expiry;
+};
 </script>
 
 <template>
@@ -93,7 +101,7 @@ const isOutsideClicked = (event) => {
         </button>
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
-            <div v-if="!token">
+            <div v-if="isTokenExpired(token)">
                 <button @click="onSignInClick()" class="p-link layout-topbar-button">
                     <i class="pi pi-user-plus"></i>
                     <span>회원가입</span>

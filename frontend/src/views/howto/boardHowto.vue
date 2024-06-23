@@ -1,7 +1,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
 import { PostService } from '@/service/PostService.js';
 import MathRenderer from '@/views/howto/MathRenderer.vue';
@@ -71,9 +70,6 @@ const goToPost = (id) => {
 
 const goToAddPost = () => {
   router.push('/howto/add');
-};
-const goToLatexPost = () => {
-  router.push('/howto/addLatex');
 };
 </script>
 
@@ -166,7 +162,6 @@ const goToLatexPost = () => {
       </div>
     </div>
   </div>
-  <AppConfig simple />
 </template>
 
 <style>

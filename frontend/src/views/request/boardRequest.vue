@@ -1,7 +1,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
 import { RequestService } from '@/service/RequestService.js';
 
@@ -9,7 +8,7 @@ const router = useRouter();
 const dataviewValue = ref(null);
 const layout = ref('list');
 const sortOrder = ref(-1);
-const sortField = ref('_id');
+const sortField = ref('date');
 const sortOptions = ref([
   { label: '최신순', value: '!date' },
   { label: '오래된 순', value: 'date' },
@@ -47,10 +46,6 @@ const goToRequest = (requestId) => {
 const goToAddRequest = () => {
   router.push('/request/add');
 };
-/*
-const goToLatexPost = () => {
-  router.push('/latexpost');
-};*/
 </script>
 
 <template>
@@ -98,7 +93,6 @@ const goToLatexPost = () => {
                     <div class="flex flex-row justify-content-between align-items-start mt-4">
                       <div class="text-sm text-gray-500">{{ new Date(item.date).toLocaleString() }}</div>
                       <div v-if="item.author">{{ item.author.schoolID }} {{ item.author.name }}</div>
-                      <div v-else> 옛날 글 </div>
                     </div>
                   </div>
                 </div>
@@ -139,7 +133,6 @@ const goToLatexPost = () => {
       </div>
     </div>
   </div>
-  <AppConfig simple />
 </template>
 
 <style>

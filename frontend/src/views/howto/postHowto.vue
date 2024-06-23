@@ -146,8 +146,8 @@ onMounted(async () => {
                     <small>{{ new Date(reply.date).toLocaleString() }}</small>
                   </div>
                   
-                  <div v-if="isLoggedIn">
-                    <Textarea v-model="replyContent[comment._id]" placeholder="답글을 입력하세요"></Textarea>
+                  <div v-if="isLoggedIn" class="reply">
+                    <Textarea v-model="replyContent[comment._id]" class="resize-none" placeholder="답글을 입력하세요"></Textarea>
                     <Button @click="addReply(comment._id)">답글 추가</Button>
                   </div>
                 </div>
@@ -173,5 +173,8 @@ onMounted(async () => {
   margin-left: 20px;
   border-left: 1px solid #ccc;
   padding-left: 10px;
+}
+Textarea {
+  resize: none;
 }
 </style>

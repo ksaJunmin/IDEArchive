@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import AppConfig from '@/layout/AppConfig.vue';
 import { useRouter } from 'vue-router';
 import { PostService } from '@/service/PostService.js';
 import MathRenderer from '@/views/howto/MathRenderer.vue';
